@@ -90,3 +90,8 @@ CompletenessConstraint(Completeness(host_id,None)): Value: 0.9962305670449683 do
 UniquenessConstraint(Uniqueness(List(id))): Value: 0.9995721184213208 does not meet the constraint requirement!
 UniquenessConstraint(Uniqueness(List(host_id))): Value: 0.6589172558528087 does not meet the constraint requirement!
 ```
+
+## References
+- http://www.vldb.org/pvldb/vol11/p1781-schelter.pdf
+- https://github.com/awslabs/deequ?fbclid=IwAR248nBH8FI5mG733fbPzbuV_ViHxl7-h8yhPODfI4_JqCsKeNIXqc-AXNY
+- https://github.com/awslabs/deequ/blob/master/src/main/scala/com/amazon/deequ/examples/data_profiling_example.md
