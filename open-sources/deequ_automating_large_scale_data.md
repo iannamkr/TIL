@@ -51,7 +51,7 @@ in AWS storage services.
 
 ### Example
 - dataset: https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data
-
+- code: https://github.com/iannamkr/SparkTestingSample/blob/master/src/test/scala/kr/iannam/spark/test/analysis/AirbnbDataAnalysis.scala#L13
 ```scala
 "wrangling and cleaning" in
   withSparkSession { spark =>
