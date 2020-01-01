@@ -1,6 +1,6 @@
 ## Case Study of Moving From CRUD to Log Based State Management
 
-### Context: Manufacturing Master Data
+## Context: Manufacturing Master Data
 
 ![image](https://user-images.githubusercontent.com/13671946/71622127-11a33500-2c17-11ea-90e9-7698ef21c29b.png)
 
@@ -21,7 +21,7 @@
 - derivation / validation [*](https://docs.oracle.com/cd/E22982_01/doc.462/e18820/proc.htm#CHDCGHHD)
 
 
-### Motivations for Rethinking Data Management
+## Motivations for Rethinking Data Management
 ![image](https://user-images.githubusercontent.com/13671946/71615396-7dc07180-2bf4-11ea-956d-805fca7be617.png)
 
 #### 1. typical relational incremental crud
@@ -44,8 +44,7 @@
     - not fault-tolerant to system failure
     - not ability recover quickly
  
-### Fragility of Incremental CRUD Batch Processing
-
+## Fragility of Incremental CRUD Batch Processing
 ![image](https://user-images.githubusercontent.com/13671946/71623196-21724780-2c1e-11ea-89f4-096a3337b473.png)
 
 #### 1. typical crud processing of stream data coming in d1- dn
@@ -71,7 +70,7 @@
   - `F`(degenerate): `G`가 누락되어 degenerate 됨 (missing relationship)
   - `G`(rejected RI): `G`는 `F`의 child component이나 참조무결성(referential integrity)에 의해 거부됨
 
-### Rethinking the Batch DataSet
+## Rethinking the Batch DataSet
 ![image](https://user-images.githubusercontent.com/13671946/71640896-1b3fa200-2cd6-11ea-9e6d-49ab99c21fde.png)
 
 #### 1. crud to log-based system 
@@ -82,7 +81,7 @@
   - do not have any meaningful information 
   - need merge with state have accumulated from the full snapshot
 
-### Composition of Partial State as an Event Stream
+## Composition of Partial State as an Event Stream
 ![image](https://user-images.githubusercontent.com/13671946/71640929-d6683b00-2cd6-11ea-9bd8-12a87328093a.png)
 
 #### 1. what is aggregate ???
