@@ -94,3 +94,9 @@ commit transaction
   
 ## Coordinating sagas (작성 중...)
 ###
+
+
+## References
+- SAGAS: https://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf
+- microservices.io: https://microservices.io/patterns/data/saga.html
+- Devoxx: https://www.youtube.com/watch?v=YPbGW3Fnmbc
