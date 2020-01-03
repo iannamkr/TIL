@@ -38,8 +38,19 @@ commit transaction
   - ! not supported by many NoSQL databases
   - ! impacts availability (CAP)
    
-## Overview of sagas
-### Sagas instead of 2pc
+## Sagas instead of 2pc
+   
+   
+### Create order saga
+![image](https://user-images.githubusercontent.com/13671946/71728980-f4be6a00-2e81-11ea-9bd7-5d70622df8bc.png)
+
+
+### Rollback using compensating transactions
+- ACID transactions can simply rollback
+- ! developer must write logic to "rollback" eventually consistency transactions
+- ! careful design required
+
+### Saga: Every Ti has a Ci
 - paper: https://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf
 - `Saga` concept
   - <img src="https://user-images.githubusercontent.com/13671946/71729371-da38c080-2e82-11ea-859c-68e5ae80fd8d.png" width="400" height="200" />
@@ -47,14 +58,6 @@ commit transaction
   - every Transaction i(Ti) has a compensating transactions (Ci)
     - compensating(i) transactions = undo what transaction(i) did
     - e.g.) T1(success) => T2(failed) => C1(=undo T1)
-    
-- `Saga` example
-- ACID transactions can simply rollback
-- ! developer must write logic to "rollback" eventually consistency transactions
-- ! careful design required
-
-### Create order saga
-![image](https://user-images.githubusercontent.com/13671946/71728980-f4be6a00-2e81-11ea-9bd7-5d70622df8bc.png)
 
 ### Create order sava - `rollback`
 ![image](https://user-images.githubusercontent.com/13671946/71729981-5e3f7800-2e84-11ea-94e9-caceb7997804.png)
