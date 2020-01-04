@@ -93,10 +93,6 @@ commit transaction
   - e.g. what does it mean to cancel a PENDING Order ??
   - "Interrupt" the Create Order Saga
   - Wait for the Create Order saga to complete ??
-  
-  
-## Coordinating sagas (작성 중...)
-###
 
 
 ## References
