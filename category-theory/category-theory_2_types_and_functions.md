@@ -62,20 +62,28 @@ argument, stores the result internally, and subsequently returns this stored res
 You can tell the memoized function from the original by watching its performance. For instance, try to memoize a function that takes a long time to evaluate. You’ll have to wait for the result
 the first time you call it, but on subsequent calls, with the same argument, you should get the result immediately
 
+2. Try to memoize a function from your standard library that you normally use to produce random numbers. Does it work?
+3. Most random number generators can be initialized with a seed. Implement a function that takes a seed, calls the random number
+generator with that seed, and returns the result. Memoize that function. Does it work?
+
+
 ```scala
-def memoize[A, B](f: A => B): A => B = {
-  new mutable.HashMap[A, B]() {
-    override def apply(key: A): B = {
-      getOrElseUpdate(key, f(key))
+object TypesAndFunctions extends App {
+  def memoize[A, B](f: A => B): A => B = {
+    new mutable.HashMap[A, B]() {
+      override def apply(key: A): B = {
+        getOrElseUpdate(key, f(key))
+      }
     }
   }
-}
 
-lazy val fib: Int => BigInt = memoize {
-  case 0 => 0
-  case 1 => 1
-  case n => fib(n-1) + fib(n-2)
-}
+  // #2
+  assert(memoize(scala.util.Random.nextInt) == memoize(scala.util.Random.nextInt))
 
-print(fib(10))
+  // #3
+  def generator(seed: Int): BigInt = {
+    scala.util.Random.nextInt(seed)
+  }
+  assert(memoize(generator)(100) == memoize(generator)(100))
+}
 ```
