@@ -1,3 +1,9 @@
+# Table of contents
+1. Arrow as Functions
+2. Properties of Composition
+3. Composition is the Essence of Programming
+
+
 ## 1. Category: The Essence of Composition
 
 ### 1.1 Arrow as Functions
