@@ -33,7 +33,13 @@
   - ** Sorting algorithms, such as quick sort, bubble sort, merge sort, etc can only work correctly on total orders.
   - ** partial orders can be sorted using topological sort **
 
-  
-
 4. Monoid as Set
+- Monoid는 놀랍도록 간단하지만 매우 강력한 개념이다. 덧셈, 곱셈 등의 기본적인 수학의 기초이며 프로그래밍 어디에서도 찾을 수 있다. 
+- `strings`, `lists`, `foldable data structure`, `futures in concurrent programming`, `events in functional reactive programming` 등등
+- 전통적으로 모노이드는 이항연산을 갖춘 set으로 정의되며 결합법칙을 따르고 항등원을 갖는다.
+- 결합법칙: (a + b) + c = a + (b + c) 
+- 항등원: 0 + a = a, a + 0 = a 
+- !교환법칙: a + b = b + a, 덧셈은 교환법칙이 성립하지만, monoid의 조건은 아니다.
+
 5. Monoid as Category
+- 범주론에서는 set, element가 아닌 objects, morphisms 에 대해 집중한다. 
