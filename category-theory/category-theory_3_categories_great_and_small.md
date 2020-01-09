@@ -36,9 +36,9 @@
   - A set of morphisms(arrow) from object a to object b in a category C
   - Every home-set in a `preorder` is empty or singleton
     - home-set C(a,a), morphism from a to a must be a singleton, containing only the identity, in any preorder
-  - ** preorder may have cycles but forbidden in a partial order **
-  - ** Sorting algorithms, such as quick sort, bubble sort, merge sort, etc can only work correctly on total orders.
-  - ** partial orders can be sorted using topological sort **
+  - **preorder may have cycles but forbidden in a partial order**
+  - **Sorting algorithms, such as quick sort, bubble sort, merge sort, etc can only work correctly on total orders.**
+  - **partial orders can be sorted using topological sort**
 
 ## Monoid as Set
 
