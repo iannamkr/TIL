@@ -41,6 +41,7 @@
   - ** partial orders can be sorted using topological sort **
 
 ## Monoid as Set
+
 - Monoid는 놀랍도록 간단하지만 매우 강력한 개념이다. 덧셈, 곱셈 등의 기본적인 수학의 기초이며 프로그래밍 어디에서도 찾을 수 있다. 
 - `strings`, `lists`, `foldable data structure`, `futures in concurrent programming`, `events in functional reactive programming` 등등
 - 전통적으로 모노이드는 이항연산을 갖춘 set으로 정의되며 결합법칙을 따르고 항등원을 갖는다.
@@ -48,7 +49,107 @@
 - 항등원: 0 + a = a, a + 0 = a 
 - !교환법칙: a + b = b + a, 덧셈은 교환법칙이 성립하지만, monoid의 조건은 아니다.
 
-## Monoid as Category
-- 범주론에서는 set, element가 아닌 objects, morphisms 에 대해 집중한다.
-- 모든 자연수 n에 대해 n을 더하는 morphism `adder`, 모든 문자열 s에 대해 서로 연결하는 morphism `concat`은 모두 category 성질을 충족한다.
-    
+### 예시
+```
+> (5 + 6) + 10 == 5 + (6 + 10)
+True
+> (5 * 6) * 10 == 5 * (6 * 10)
+True
+> ("Hello" ++ " ") ++ "world!" == "Hello" ++ (" " ++ "world!")
+True
+
+> 255 + 0 == 255 && 0 + 255 == 255
+True
+> 255 * 1 == 255 && 1 * 255 == 255
+True
+> [1,2,3] ++ [] == [1,2,3] && [] ++ [1,2,3] == [1,2,3]
+True
+```
+monoid의 예
+- Type `Int`에 대해 곱셈연산과 이에 대한 항등원 1
+- Type `String` 에 대해 `String.concat` 연산과 이에 대한 항등원 `String.empty`
+- Type `List`에 대해 `++` 연산과 이에 대한 항등원 `List.empty`
+- Type `Boolean`에 대해 `&&` 연산과 이에 대한 항등원 `true`
+- Type A => A 에 대한 morphism에 대해 `andThen` 연산 (function composition)과 항등원 _(x: A) => x_ (identity function)
+
+
+### Examples in Scala
+
+#### 1. 
+```scala
+import cats.Monoid
+import cats.implicits._
+
+// 0
+Monoid[Int].empty
+// 3
+Monoid[Int].combine(1,2)
+
+// 55
+(1 to 10).toList.combineAll
+(1 to 10).fold(Monoid[Int].empty)((a,b) => a.combine(b))
+(1 to 10).fold(0)(_ + _)
+
+/*
+------------ Monoid[Int].combine -------------
+            |    |    |    |    |    |    |    |    |    |
+            v    v    v    v    v    v    v    v    v    v
+((((((((((0 + 1) + 2) + 3) + 4) + 5) + 6) + 7) + 8) + 9) + 10)
+          ^
+          |_ Monoid[Int].empty
+*/
+
+
+```scala
+// Map[Long, Int] = Map()
+Monoid[Map[Long, Int]].empty
+
+// Map[Long,Int] = Map(1 -> 110, 2 -> 999)
+Monoid[Map[Long, Int]].combine(Map(1L -> 10), Map(1L -> 100, 2L -> 999))
+```
+
+
+#### 2.
+- Input
+```
+List(
+  Map(
+    (Date(2016, 1, 4), cologne, pigeon) -> 37,
+    (Date(2016, 1, 11), bonn, starling) -> 64,
+    (Date(2016, 1, 18), cologne, bullfinch) -> 54
+  ),
+  Map(
+    (Date(2016, 1, 18), cologne, bullfinch) -> 60,
+    (Date(2016, 1, 18), bonn, bullfinch) -> 2,
+    (Date(2016, 1, 25), dusseldorf, bullfinch) -> 75
+  ),
+  Map(
+    (Date(2016, 1, 4), cologne, pigeon) -> 30
+  )
+)
+```
+
+- Output
+```
+Map(
+  (Date(2016, 1, 4), cologne, pigeon) -> 67,
+  (Date(2016, 1, 11), bonn, starling) -> 64,
+  (Date(2016, 1, 18), cologne, bullfinch) -> 114,
+  (Date(2016, 1, 18), bonn, bullfinch) -> 2,
+  (Date(2016, 1, 25), dusseldorf, bullfinch) -> 75
+)
+```
+- Solution
+```scala
+def aggregate(birdCounts: List[Map[(Date, Location, Species), Int]]) = 
+  birdCounts
+    .flatMap(_.toList)
+    .groupBy(_._1)
+    .map({ case (k,v) => (k, v.map(_._2).sum) })
+```
+
+```
+import cats.implicits._
+
+birdCounts.combineAll
+```
