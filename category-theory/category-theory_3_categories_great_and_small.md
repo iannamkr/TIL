@@ -1,9 +1,16 @@
 # Table of contents
 1. No Objects
+2. Simple Graphs
+3. Orders
+4. Monoid as Set
+5. Monoid as Category
+
+
+## 1. No Objects
 - zero object & zero morphism
 - empty set makes sense, then how about an empty category?
 
-2. Simple Graphs
+## 2. Simple Graphs
 - categories by connecting objects with arrows
   - 1. an identity arrow at each node
   - 2. any two composable arrows
@@ -16,7 +23,7 @@
   - 1. all object for every node in the graph
   - 2. all possible chains of composable graph edges as morphisms
 
-3. Orders
+## 3. Orders
 - A category is a relation between object: **the relation of being less than or equal**
 - `preorder`: a < b and b < c then a < c (transitivity)
 - `partial order`: a < b and b < a then a = b (anti-symmetry)
@@ -33,7 +40,7 @@
   - ** Sorting algorithms, such as quick sort, bubble sort, merge sort, etc can only work correctly on total orders.
   - ** partial orders can be sorted using topological sort **
 
-4. Monoid as Set
+## Monoid as Set
 - Monoid는 놀랍도록 간단하지만 매우 강력한 개념이다. 덧셈, 곱셈 등의 기본적인 수학의 기초이며 프로그래밍 어디에서도 찾을 수 있다. 
 - `strings`, `lists`, `foldable data structure`, `futures in concurrent programming`, `events in functional reactive programming` 등등
 - 전통적으로 모노이드는 이항연산을 갖춘 set으로 정의되며 결합법칙을 따르고 항등원을 갖는다.
@@ -41,7 +48,7 @@
 - 항등원: 0 + a = a, a + 0 = a 
 - !교환법칙: a + b = b + a, 덧셈은 교환법칙이 성립하지만, monoid의 조건은 아니다.
 
-5. Monoid as Category
+## Monoid as Category
 - 범주론에서는 set, element가 아닌 objects, morphisms 에 대해 집중한다.
 - 모든 자연수 n에 대해 n을 더하는 morphism `adder`, 모든 문자열 s에 대해 서로 연결하는 morphism `concat`은 모두 category 성질을 충족한다.
     
