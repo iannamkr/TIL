@@ -118,7 +118,7 @@ Writer<vector<string>> process(string s) {
 }
 ```
 - C++14-comliant compiler의 경우 lambda function을 지원하므로 아래와 같이 변경할 수 있다.
-```
+```cpp
 auto const compose = [](auto m1, auto m2) {
     return [m1, m2](auto x) {
         auto p1 = m1(x);
@@ -133,7 +133,7 @@ Writer<vector<string>> process(string s) {
 ```
 
 identity morphism은 아래와 같다.
-```
+```cpp
 Writer<A> identity(A);
 
 template<class A> Writer<A> identity(A x) {
@@ -143,7 +143,7 @@ template<class A> Writer<A> identity(A x) {
 
 
 위에서 정의한 category가 category의 조건을 충족하는지 검증해보자
-```
+```cpp
 make_pair(p2.first, p1.second + p2.second);
 ```
 - `p2.first`는 regular function composition으로 결합(associative) 가능하다.
