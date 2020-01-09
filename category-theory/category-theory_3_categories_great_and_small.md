@@ -14,8 +14,7 @@
 - categories by connecting objects with arrows
   - 1. an identity arrow at each node
   - 2. any two composable arrows
-  - ** Every time you add a new arrow, you have to consider its composition 
-  with any other arrow (except for the identity arrows) and itsetlf
+  - **Every time you add a new arrow, you have to consider its composition with any other arrow (except for the identity arrows) and itsetlf**
 - `free category`
   - ![image](https://user-images.githubusercontent.com/13671946/71914103-39b50a00-31bc-11ea-9cc2-1b0e68e17246.png)
   - composition: ![image](https://user-images.githubusercontent.com/13671946/71914076-2ace5780-31bc-11ea-9748-f24665140117.png)
