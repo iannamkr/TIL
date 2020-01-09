@@ -148,7 +148,7 @@ def aggregate(birdCounts: List[Map[(Date, Location, Species), Int]]) =
     .map({ case (k,v) => (k, v.map(_._2).sum) })
 ```
 
-```
+```scala
 import cats.implicits._
 
 birdCounts.combineAll
