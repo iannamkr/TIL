@@ -42,4 +42,6 @@
 - !교환법칙: a + b = b + a, 덧셈은 교환법칙이 성립하지만, monoid의 조건은 아니다.
 
 5. Monoid as Category
-- 범주론에서는 set, element가 아닌 objects, morphisms 에 대해 집중한다. 
+- 범주론에서는 set, element가 아닌 objects, morphisms 에 대해 집중한다.
+- 모든 자연수 n에 대해 n을 더하는 morphism `adder`, 모든 문자열 s에 대해 서로 연결하는 morphism `concat`은 모두 category 성질을 충족한다.
+    
