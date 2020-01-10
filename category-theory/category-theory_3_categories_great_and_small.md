@@ -72,9 +72,37 @@ monoid의 예
 - Type A => A 에 대한 morphism에 대해 `andThen` 연산 (function composition)과 항등원 _(x: A) => x_ (identity function)
 
 
-### Examples in Scala
+### Scala
+- `String Monoid`
+```scala
+object CategoriesGreatAndSmall {
+  trait Monoid[M] {
+    def mempty: M
+    def mappend(m1: M, m2: M): M
+  }
 
-#### 1. 
+  object Monoid {
+    implicit def stringMonoid: Monoid[String] = new Monoid[String] {
+      def mempty: String = ""
+      def mappend(m1: String, m2: String): String = m1 + m2
+    }
+  }
+
+  def compose[T](f: T => T, g: T => T): T => T = {
+    x: T => f(g(x))
+  }
+
+  def main(args: Array[String]): Unit = {
+    val stringMonoid = Monoid.stringMonoid
+    def f = stringMonoid.mappend("1", "2")
+    def g = stringMonoid.mappend("2", "3")
+    assert(stringMonoid.mappend(f, "3") == stringMonoid.mappend("1", g))
+  }
+}
+```
+
+
+#### Example 1. 
 ```scala
 import cats.Monoid
 import cats.implicits._
@@ -108,7 +136,7 @@ Monoid[Map[Long, Int]].combine(Map(1L -> 10), Map(1L -> 100, 2L -> 999))
 ```
 
 
-#### 2.
+#### Example 2. 
 - Input
 ```
 List(
@@ -152,3 +180,6 @@ import cats.implicits._
 
 birdCounts.combineAll
 ```
+
+
+
