@@ -151,3 +151,45 @@ make_pair(p2.first, p1.second + p2.second);
 ```
  ("Hello" ++ " ") ++ "world!" == "Hello" ++ (" " ++ "world!")
 ```
+
+
+
+### Scala
+```scala
+object KleisliCategory {
+  type Writer[A] = (A, String)
+
+  object kleisli {
+    implicit  class KleisliOps[A, B](m1: A => Writer[B]) {
+      def >=>[C](m2: B => Writer[C]): A => Writer[C] =
+        x => {
+          val (y, s1) = m1(x)
+          val (z, s2) = m2(y)
+          (z, s1 + s2)
+        }
+    }
+  }
+
+  def pure[A](x: A): Writer[A] = (x, "")
+
+  val upCase: String => Writer[String] =
+    s => (s.toUpperCase, "upCase ")
+
+  val toWords: String => Writer[List[String]] =
+    s => (s.split(' ').toList, "toWords ")
+
+  val process: String => Writer[List[String]] = {
+    import kleisli._
+    upCase >=> toWords
+  }
+
+  def main(args: Array[String]): Unit = {
+    val process: String => Writer[List[String]] = {
+      import kleisli._
+      upCase >=> toWords
+    }
+
+    print(process("hello world! this is kelisli category"))
+  }
+}
+```
