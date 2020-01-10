@@ -1,7 +1,13 @@
-1.1 Translating mathematics into code
+# 1.1 Translating mathematics into code
 1.1.1 First examples
+
 1.1.2 Nameless functions
+
 1.1.3 Nameless functions and bound variables
+
+
+---
+
 
 ### 1.1.1 First examples
 #### Example 1.1.1.1: **Factorial of 10**
