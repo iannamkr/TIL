@@ -84,7 +84,7 @@ math.sin(pi) * x / pi * x
 
 ### 1.4.1.8
 
--Define a function p that takes a list of integers and a function f: Int => Int, and returns the largest value of f (x) among all x in the list.
+- Define a function p that takes a list of integers and a function f: Int => Int, and returns the largest value of f (x) among all x in the list.
 
 ```scala
 def p(s: List[Int], f: Int => Int): Int = s.map(f).max
@@ -105,8 +105,7 @@ def p(s: List[Int], f: Int => Int): Int = s.map(f).max
 ---
 
 ### 1.4.2.2
-Find all integers k ∈ [1, 10] such that there are at least three different integers j, 
-where 1 ≤ j ≤ k, each j satisfying the condition j2 > 2k.
+- Find all integers k ∈ [1, 10] such that there are at least three different integers j, where 1 ≤ j ≤ k, each j satisfying the condition j2 > 2k.
 
 ```scala
 (1 to 10).filter(k => (1 to 10).filter(j * j > 2 * k).size >= 3)
