@@ -15,17 +15,71 @@
 ## 1.7.3 'variable' 의 수학적 의미 
 - FP에서의 variable은 수학에서 사용되는 변수와 매우 유사하다. 
 
-- in mathmatics 
-  - 수학에서의 변수는 함수 인자로 사용된다. 
-  - 수학에서의 변수는 수식 내에서 값이 변경되지 않는다는 불변성의 규칙이 있다.(nameless function 에서의 인자 역시 불변하다.)
-  - 즉 수학에서의 변수는 정의된 수식(expression) 안에서 이름상수(named constant)로 취급된다.
-  - 인자 x의 값에 따라 함수 f의 결과는 바뀔 수 있으나, 전달된 x는 함수 f가 처리되는 동안에는 변경되지 않는다.
-  - 수식 ```x^2 + x```에는 x의 값이 정수인지 아닌지 표현하지 않으며, 연산 중간에 type이 vector 인지도 알려주지 않는다. 왜냐하면 수식에서 모든 변수는 타입은 미리 확인되어진다.
+- in mathematics 
+  - 수학에서의 변수는 함수의 전달인자로 사용된다. 
+  - 수학에서의 변수는 수식 내에서 값이 변경되지 않는다는 불변성의 규칙이 있다. 무명함수의 전달인자 역시 불변하다.
+  - 수학에서의 변수는 정의된 수식(expression) 안에서 이름상수(named constant)로 취급된다.
+  - 함수의 전달인자 x의 값에 따라 함수 f의 결과는 바뀔 수 있으나, 전달된 x의 값은 함수 f가 처리되는 동안에는 변경되지 않는다.
+  - 수식 ```x^2 + x``` 에는 x의 값이 정수인지 아닌지 또는 연산 중간 type이 vector 인지 아닌지 알려주지 않는다. 왜냐하면 수식의 모든 변수는 사전에 그 타입이 검증된다. (The types of all variables are checked in advance)
 
-- in FP
-  - FP는 수학의 변수가 따르는 규칙을 그대로 적용하였다. 
-  - 변수는 **불변하는 이름상수**이며 타입 역시 변하지 않는다. 
+- FP에서는 변수에 대하여 수학과 동일한 관점을 채택하였다.
+    - 변수는 **불변하는 이름상수**이며, 그 타입 역시 변하지 않는다. 
+    - 타입은 "모든 가능한 값의 집합"으로 정의되며, 함수의 각 전달인자들은 반드시 타입을 가져야한다. 
+    - 프로그래밍 언어의 컴파일러는 프로그램이 실행되기 이전에 자동적으로 모든 전달인자의 타입을 확인한다. 즉 부적절한 타입을 전달인자로 호출하면 컴파일되지 않는다.
+- FP에서의 변수는 재사용이 가능한 표현식을 의미한다.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=let\&space;z&space;=&space;\frac{x-y}{x&plus;y},&space;cosz&space;&plus;&space;cos2z&space;&plus;&space;cos3z" target="_blank"><img src="https://latex.codecogs.com/gif.latex?let\&space;z&space;=&space;\frac{x-y}{x&plus;y},&space;cosz&space;&plus;&space;cos2z&space;&plus;&space;cos3z" title="let\ z = \frac{x-y}{x+y}, cosz + cos2z + cos3z" /></a>
  
-  - 
+z는 첫 번째 수식이 수행된 뒤에도 여전히 불변하며, 그 타입 역시 고정된다. 
+
+## 1.7.4 loop 없는 반복연산 (Iteration without loops)
+- FP에서 또 다른 중요한 특징은 loop를 작성하지 않고 반복을 다루는 것이다.
+- 반복적인 연산작업(Iterative computations)은 수학에서는 어디에나 존재한다. 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\sqrt{\frac{1}{n-1}&space;\sum_{i=1}^{n}&space;\sum_{j=1}^{n}&space;s_{i}s_{j}&space;-&space;\frac{1}{n(n-1)}&space;\left&space;(&space;\sum_{i=1}^{n}s_{i}&space;\right&space;)^{2}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\sqrt{\frac{1}{n-1}&space;\sum_{i=1}^{n}&space;\sum_{j=1}^{n}&space;s_{i}s_{j}&space;-&space;\frac{1}{n(n-1)}&space;\left&space;(&space;\sum_{i=1}^{n}s_{i}&space;\right&space;)^{2}}" title="\sqrt{\frac{1}{n-1} \sum_{i=1}^{n} \sum_{j=1}^{n} s_{i}s_{j} - \frac{1}{n(n-1)} \left ( \sum_{i=1}^{n}s_{i} \right )^{2}}" /></a>
+
+위 수식은 i, j의 값에 따라 반복적으로 계산된다. 그러나 그 어디에도 "이 수식을 10번 반복하시오" 라는 문장은 없다.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=(x-1)(x^{2}&space;&plus;&space;x&space;&plus;&space;1)&space;=&space;x^{3}&space;-&space;1" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(x-1)(x^{2}&space;&plus;&space;x&space;&plus;&space;1)&space;=&space;x^{3}&space;-&space;1" title="(x-1)(x^{2} + x + 1) = x^{3} - 1" /></a>
+
+실제로, 위 수식을 10 번 반복적으로 수행하는 것은 무의미하다.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\sum_{i=1}^{n},&space;\&space;\&space;\prod_{i=1}^{n}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\sum_{i=1}^{n},&space;\&space;\&space;\prod_{i=1}^{n}" title="\sum_{i=1}^{n}, \ \ \prod_{i=1}^{n}" /></a>
+
+loop 대신에 수학자들은 위와 같은 기호를 사용하는데 이는 수학에서 반복적인 연산작업을 의미하기 때문이다. 이러한 연산은 수학적 유도 과정을 통해 정의된다. 
+
+**함수형 프로그래밍 방식은 수학적 유도 과정을 코드로 변환하기 위한 도구로 발전해왔다.** .map, .filter, .sum 등은 반복적인 연산과정을 구현한 함수들이다. 이러한 연산자들은 loop 없이도 매우 유연하게 반복적인 연산을 수행하는 코드를 작성 가능하게 한다. 
+
+개발자들은 .map, .filter, .sum 등과 같은 이미 정의된 반복함수들을 통해 loop 작성을 library에 위임며, library들은 이렇게 작성된 함수를 machine 코드로 변환한다. 아마도 변환된 machine code는 loop를 포함하겠지만, 개발자는 알 필요가 없다.
+
+
+## 1.7.5 수학적 표기법에서의 무명함수
+- **수학에서의 함수는 임의의 set에서 다른 set로의 맵핑이다.**
+- 함수는 이름을 반드시 필요로 하지 않으며, **단지 맵핑만 정의될 뿐이다.**
+- 그러나 무명함수는 전통적인 수학적 표기법에서 매우 광범위하게 사용된다.
+- 무명함수는 FP에서 매우 중요한 것으로 개발자가 코드를 직관적이고 일관성 있게 작성하도록 한다. 
+- 무명함수는 함수 범위(scope) 밖에서는 볼 수 없는 바인딩 변수를 포함한다. 이러한 특징은 수학적 규칙으로부터 따라온 것이다.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=f(x)&space;=&space;\int_{0}^{x}&space;\frac{dx}{1&plus;x}\&space;;&space;\&space;f(x)&space;=&space;\int_{0}^{x}&space;\frac{dz}{1&plus;z}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f(x)&space;=&space;\int_{0}^{x}&space;\frac{dx}{1&plus;x}\&space;;&space;\&space;f(x)&space;=&space;\int_{0}^{x}&space;\frac{dz}{1&plus;z}" title="f(x) = \int_{0}^{x} \frac{dx}{1+x}\ ; \ f(x) = \int_{0}^{x} \frac{dz}{1+z}" /></a>
+
+예로 수학적 규칙은 적분변수를 다시 명명하더라도 두 수식은 동일한 함수 f 이다. 
+
+프로그래밍에서는 변수의 이름을 바꿀 수 있는 유일한 경우는 함수의 전달인자 뿐이다.
+```scala
+(x: Double) => 1.0 / 1 + x
+(z: Double) => 1.0 / 1 + z
+
+integreation(0, x, { z => 1.0 / (1 + z ) } )
+```
+
+다음은 합계를 구하는 전통적인 수학적 표기법의 예시이다.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\sum_{k=0}^{x}&space;\frac{1}{1&plus;k}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\sum_{k=0}^{x}&space;\frac{1}{1&plus;k}" title="\sum_{k=0}^{x} \frac{1}{1+k}" /></a>
+
+위 수식에서 k는 Σ 기호에 바인딩된 변수이다. 그러나 적분은 특별한 기호인 "d"에 따라 바운딩 된다. 이러한 불일치성은 아래와 같이 무명함수를 사용함으로써 명확해진다.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=denote\&space;summation\&space;by\&space;\sum_{0}^{x}(k\rightarrow&space;\frac{1}{1&plus;k})\&space;instead\&space;of\&space;\sum_{k=0}^{x}&space;\frac{1}{1&plus;k}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?denote\&space;summation\&space;by\&space;\sum_{0}^{x}(k\rightarrow&space;\frac{1}{1&plus;k})\&space;instead\&space;of\&space;\sum_{k=0}^{x}&space;\frac{1}{1&plus;k}" title="denote\ summation\ by\ \sum_{0}^{x}(k\rightarrow \frac{1}{1+k})\ instead\ of\ \sum_{k=0}^{x} \frac{1}{1+k}" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=denote\&space;integration\&space;by\&space;\int_{0}^{x}(z\rightarrow&space;\frac{1}{1&plus;z})\&space;instead\&space;of\&space;\int_{0}^{x}&space;\frac{dz}{1&plus;z}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?denote\&space;integration\&space;by\&space;\int_{0}^{x}(z\rightarrow&space;\frac{1}{1&plus;z})\&space;instead\&space;of\&space;\int_{0}^{x}&space;\frac{dz}{1&plus;z}" title="denote\ integration\ by\ \int_{0}^{x}(z\rightarrow \frac{1}{1+z})\ instead\ of\ \int_{0}^{x} \frac{dz}{1+z}" /></a>
 
 
