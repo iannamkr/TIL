@@ -218,3 +218,68 @@ val q = Map("apple" -> 7, "pear" -> 3)
 p.groupBy(_._1).mapValues(_.map(_._2).sum)
 // Map(pear -> 3, apple -> 7)
 ```
+
+#### 2.1.7.10
+Given a Seq[List[Int]], compute a newSeq[List[Int]] where each inner list contains
+three largest elements from the initial inner list (or fewer than three if the initial inner list is shorter).
+
+**Hint**: use `.map`, `.sortBy`, `.take`.
+
+```scala
+val p: Seq[List[Int]] = Seq(List(3,5,2,7,9,1), List(14,16,11,12,17), List(26,21,29,27,25))
+
+val q: Seq[List[Int]] = p.map(s => s.sortBy(s => s)(Ordering[Int].reverse).take(3))
+//List(List(9, 7, 5), List(17, 16, 14), List(29, 27, 26))
+```
+
+#### 2.1.7.11
+(a) Given two sets `p:Set[Int]` and `q:Set[Int]`, compute a set of type `Set[(Int, Int)]` as the Cartesian product of the sets `p` and `q`; that is, the set of all pairs `(x, y)` where x is an element from the set `p` and `y` is an element from the set `q`.
+
+(b) Implement this computation as a function with type parameters `I`, `J` instead of `Int`. The required type signature and a sample test:
+
+```
+def cartesian[I,J](p: Set[I], q: Set[J]): Set[(I, J)] = ???
+
+scala> cartesian(Set("a", "b"), Set(10, 20))
+res0: Set[(String, Int)] = Set((a,10), (a,20), (b,10), (b,20))
+```
+**Hint**: use `.flatMap` and `.map` on sets.
+
+```scala
+val p: Set[String] = Set("a", "b")
+val q: Set[Int] = Set(10, 20)
+
+val cartesian = p.flatMap(i => q.map(j => (i, j)))
+```
+
+```scala
+val p: Set[String] = Set("a", "b")
+val q: Set[Int] = Set(10, 20)
+
+def cartesian[I, J](p: Set[I], q: Set[J]): Set[(I, J)] = {
+    p.flatMap(i => q.map(j => (i, j)))
+}
+```
+
+#### 2.1.7.12
+Given a Seq[Map[Person, Amount]], showing the amounts various people paid on
+each day, compute a Map[Person, Seq[Amount]], showing the sequence of payments for each person.
+Assume that Person and Amount are type parameters. The required type signature and a sample test:
+
+```scala
+def payments[Person, Amount](data: Seq[Map[Person, Amount]]): Map[Person, Seq[Amount]] = ???
+// On day 1, Tarski paid 10 and Gödel paid 20. On day 2, Church paid 100 and Gentzen paid 50, etc.
+
+scala> payments(Seq(Map("Tarski" -> 10, "Gödel" -> 20), Map("Church" -> 100, "Gentzen" -> 50),
+    Map("Tarski" -> 50), Map("Banach" -> 15, "Gentzen" -> 35)))
+res0: Map[String, Seq[Int]] = Map(Genzten -> List(50, 35), Church -> List(100), Banach -> List(15),
+    Tarski -> List(10, 50), Gödel -> List(20))
+```
+**Hint**: use `.flatMap`, `.groupBy`, `.mapValues` on dictionaries.
+
+```
+val p = Seq(Map("Tarski" -> 10, "Gödel" -> 20), Map("Church" -> 100, "Gentzen" -> 50), Map("Tarski" -> 50), Map("Banach" -> 15, "Gentzen" -> 35))
+
+p.flatten.groupBy(_._1).map { case (k, v) => (k, v.map(_._2)) }
+// Map(Gentzen -> List(50, 35), Church -> List(100), Banach -> List(15), Gödel -> List(20), Tarski -> List(10, 50))
+```
