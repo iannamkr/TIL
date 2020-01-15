@@ -74,3 +74,37 @@ Hint: use .flatMap, .max.
 // xi.map(s => Seq(s, s*s, math.cos(s), math.sin(s))).flatten.max
 xi.flatMap(s => Seq(s, s*s, math.cos(s), math.sin(s))).max
 ```
+
+#### 2.1.5.8
+From a dictionary of type Map[String, String] mapping names to addresses, and
+assuming that the addresses do not repeat, compute a dictionary of type Map[String, String] mapping
+the addresses back to names.
+
+Hint: use .map and .toMap
+
+```scala
+xi.map{ case (name, address) => (address, name) }.toMap
+```
+
+#### 2.1.5.9
+Write the solution of Example 2.1.5.8 as a function with type parameters Name and
+Addr instead of the fixed type String.
+
+```scala
+def getReverseDict(dic: Map[Name, Address]): Map[Address, Name] = {
+  dic.map { case (name, address) => (address, name) }.toMap
+}
+```
+- `String`이 아닌 type parameter로 변경하는 경우, complier가 자동으로 해당 type에 맞게 세팅한다.
+
+
+#### 2.1.5.10
+Given a sequence words:Seq[String] of words, compute a sequence of type Seq[ (Seq[String], Int) ], where each inner sequence contains all the words having the same length, paired with the integer value showing that length. So, the input Seq("the", "food", "is", "good") should produce the output
+
+```Seq( (Seq("is"), 2), (Seq("the"), 3), (Seq("food", "good"), 4) )```
+
+```scala
+// words.groupBy(s => s.length).toSeq.map { case (len, word) => (word, len) }
+// words.groupBy(_.length).toSeq.map { case (len, word) => (word, len) }
+words.groupBy(_.length).toSeq.map(_.swap)
+```
