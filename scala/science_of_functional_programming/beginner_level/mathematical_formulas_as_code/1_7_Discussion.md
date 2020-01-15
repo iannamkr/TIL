@@ -2,7 +2,7 @@
 
 ### 1.7.1 함수 지향 프로그래밍 패러다임(Functional programming as a paradigm)
 - 함수형 프로그래밍은 프로그래머가 코드를 작성함에 있어 선택 가능한 다양한 방식 중의 하나이다.
-- FP(Functional Programming)에서 가장 중요한 기본 원칙은 코드를 수학 표현식(a mathematical expression or formula)으로 작성하는 것이다.
+- **FP(Functional Programming)에서 가장 중요한 기본 원칙은 코드를 수학 표현식(a mathematical expression or formula)으로 작성하는 것이다.**
 - FP는 개발자로 하여금 추측(guessing)이 아닌 수학자/과학자와 같이 체계적이고 논리적인 추론(logical reasoning)을 통해 코드를 작성하도록 한다.
 - 오랜시간 FP 커뮤니티에서는 여러 프로그래밍 문제를 해결하기 위해 함수형 도구(e.g `.map`, `.filter`, `.sum`...)들을 만들어왔으며, 그 결과 실제 세계의 다양한 문제를 해결하는데 유용함을 입증하였다. 
 
@@ -28,7 +28,7 @@
 
 - FP에서는 변수에 대하여 수학과 동일한 관점을 채택하였다.
     - 변수는 **불변하는 named constant**이며, 그 타입 역시 변하지 않는다. 
-    - 타입은 "모든 가능한 값의 집합"으로 정의되며, 함수의 각 전달인자들은 반드시 타입을 가져야한다. 
+    - **타입은 "모든 가능한 값의 집합"으로 정의되며, 함수의 각 전달인자들은 반드시 타입을 가져야한다.**
     - 프로그래밍 언어의 컴파일러는 프로그램이 실행되기 이전에 자동적으로 모든 전달인자의 타입을 확인한다. 즉 부적절한 타입을 전달인자로 호출하면 컴파일되지 않는다.
 - FP에서의 변수는 재사용이 가능한 표현식을 의미한다.
 
@@ -39,7 +39,7 @@ z는 첫 번째 수식이 수행된 뒤에도 여전히 불변하며, 그 타입
 ---
 
 ### 1.7.4 loop 없는 반복연산 (Iteration without loops)
-- FP에서 또 다른 중요한 특징은 loop를 작성하지 않고 반복을 다루는 것이다.
+- **FP에서 또 다른 중요한 특징은 loop를 작성하지 않고 반복을 다루는 것이다.**
 - 수학에서 반복적인 연산작업(Iterative computations)은 어디에나 존재한다. 
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\sqrt{\frac{1}{n-1}&space;\sum_{i=1}^{n}&space;\sum_{j=1}^{n}&space;s_{i}s_{j}&space;-&space;\frac{1}{n(n-1)}&space;\left&space;(&space;\sum_{i=1}^{n}s_{i}&space;\right&space;)^{2}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\sqrt{\frac{1}{n-1}&space;\sum_{i=1}^{n}&space;\sum_{j=1}^{n}&space;s_{i}s_{j}&space;-&space;\frac{1}{n(n-1)}&space;\left&space;(&space;\sum_{i=1}^{n}s_{i}&space;\right&space;)^{2}}" title="\sqrt{\frac{1}{n-1} \sum_{i=1}^{n} \sum_{j=1}^{n} s_{i}s_{j} - \frac{1}{n(n-1)} \left ( \sum_{i=1}^{n}s_{i} \right )^{2}}" /></a>
@@ -64,8 +64,8 @@ loop 대신에 수학자들은 위와 같은 기호를 사용하는데 이는 �
 - **수학에서의 함수는 임의의 set에서 다른 set로의 맵핑이다.**
 - 함수는 이름을 반드시 필요로 하지 않으며, **단지 맵핑만 정의될 뿐이다.**
 - 그러나 무명함수는 전통적인 수학적 표기법에서 매우 광범위하게 사용된다.
-- 무명함수는 FP에서 매우 중요한 것으로 개발자가 코드를 직관적이고 일관성 있게 작성하도록 한다. 
-- 무명함수는 함수 범위(scope) 밖에서는 볼 수 없는 바인딩 변수를 포함한다. 이러한 특징은 수학적 규칙으로부터 따라온 것이다.
+- **무명함수는 FP에서 매우 중요한 것으로 개발자가 코드를 직관적이고 일관성 있게 작성하도록 한다.** 
+- **무명함수는 함수 범위(scope) 밖에서는 볼 수 없는 바인딩 변수를 포함한다. 이러한 특징은 수학적 규칙으로부터 따라온 것이다.**
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=f(x)&space;=&space;\int_{0}^{x}&space;\frac{dx}{1&plus;x}\&space;;&space;\&space;f(x)&space;=&space;\int_{0}^{x}&space;\frac{dz}{1&plus;z}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f(x)&space;=&space;\int_{0}^{x}&space;\frac{dx}{1&plus;x}\&space;;&space;\&space;f(x)&space;=&space;\int_{0}^{x}&space;\frac{dz}{1&plus;z}" title="f(x) = \int_{0}^{x} \frac{dx}{1+x}\ ; \ f(x) = \int_{0}^{x} \frac{dz}{1+z}" /></a>
 
@@ -146,7 +146,7 @@ integration(0, 7, x=> x*x*x*x*x*x, eps = 0.01)
 }
 ```
 
-이러한 스타일의 프로그래밍은 각 부분 표현식이 반드시 분리되어 작성 되어야하는 경우에 한해서이다. (메모리 주소나 CPU register 변수를 할당하는 경우) 
+이러한 스타일의 프로그래밍은 각 부분 표현식이 반드시 분리되어 작성 되어야 하는 경우에 한해서이다. (메모리 주소나 CPU register 변수를 할당하는 경우) 
 개발자는 무명 표현식을 통해 좀 더 생산적일 수 있으며 무명 표현식의 사용은 수학에서는 매우 흔하다.
 
 위와 동일한 논리에서 데이터구조 역시 이름 없이 만드는 것은 유용하다. `dictionary`(`hashmap`) 은 scala에서 다음과 같이 사용된다.
