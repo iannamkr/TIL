@@ -6,7 +6,7 @@
 - Scala에서는 sequence으로부터 single value 를 계산하는 `.count`, `.length`, `.max` 와 같은 함수를 제공하지만 
 이 함수들을 활용해도 `.sum`을 구현할 수 없다.
 
-- `.map`, `sum` 등으로 해결할 수 없는 또 다른 문제로는 부동소수점연산이다.
+- `.map`, `sum` 등으로 해결할 수 없는 또 다른 문제로는 부동소수점 연산이 있다.
 
 ```scala
 def digitsToDouble(ds: Seq[Char]): Double = ???
