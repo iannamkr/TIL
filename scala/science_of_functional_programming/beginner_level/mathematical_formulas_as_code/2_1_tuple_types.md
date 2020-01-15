@@ -141,11 +141,24 @@ p.zip(q).filter(_._2).map(_._1)
 // List(a, b, e)
 ```
 
-#### 2.1.7.4
+#### 2.1.7.4 :exclamation:
 Convert a Seq[Int] into a Seq[(Int, Boolean)] where the Boolean value is true when the element is followed by a larger value. 
 
 For example, the input sequence `Seq(1,3,2,4)` is to be converted into `Seq((1,true),(3,false),(2,true),(4,false))`. (The last element, 4, has no following element.)
 
-```sql
-p.zip(p.tail :+ 0).map { case (x, y) => (x, x < y) }
+```scala
+val p: Seq[Int] = Seq(1,3,2,4)
+val q: Seq[(Int, Boolean)] = p.zip(p.tail :+ 0).map { case (x, y) => (x, x < y) }
+```
+
+#### 2.1.7.5
+Given p:Seq[String] and q:Seq[Int] of equal length and assuming that values in q do
+not repeat, compute a Map[Int, String] mapping numbers from q to the corresponding strings from p.
+
+```scala
+val p: Seq[String] = Seq("a", "b", "c", "d", "e")
+val q: Seq[Int] = Seq(4, 0, 3, 2, 1)
+
+q.flatMap(i => p.zipWithIndex.filter(_._2 == i).map(j => (j._1 -> i))).toMap
+// Map(e -> 4, a -> 0, b -> 1, c -> 2, d -> 3)
 ```
