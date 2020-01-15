@@ -111,11 +111,41 @@ words.groupBy(_.length).toSeq.map(_.swap)
 
 
 #### 2.1.7.1
+Find all pairs i, j within (0, 1, ..., 9) such that i + 4 ∗ j > i ∗ j.
+
+**Hint**: use .flatMap and .filter.
+
 ```scala
 s.flatMap{ i => s.map { j => (i + 4 * j, i * j) } }.filter { case (x, y) => x > y }
 ```
 
 #### 2.1.7.2
+Same task as in Exercise 2.1.7.1, but for i, j, k and the condition i + 4 ∗ j + 9 ∗ k >
+i ∗ j ∗ k.
+
 ```scala
 s.flatMap{ i => s.flatMap { j => s.map { k => (i + 4 * j + 9 * k, i * j * k) } } }.filter { case (x, y) => x > y }
+```
+
+#### 2.1.7.3 
+Given two sequences p: Seq[String] and q: Seq[Boolean] of equal length, compute a
+Seq[String] with those elements of p for which the corresponding element of q is true.
+
+**Hint**: use `.zip`, `.map`, `.filter`.
+
+```scala
+val p: Seq[String] = Seq("a", "b", "c", "d", "e")
+val q: Seq[Boolean] = Seq(true, true, false, false, true)
+
+p.zip(q).filter(_._2).map(_._1)
+// List(a, b, e)
+```
+
+#### 2.1.7.4
+Convert a Seq[Int] into a Seq[(Int, Boolean)] where the Boolean value is true when the element is followed by a larger value. 
+
+For example, the input sequence `Seq(1,3,2,4)` is to be converted into `Seq((1,true),(3,false),(2,true),(4,false))`. (The last element, 4, has no following element.)
+
+```sql
+p.zip(p.tail :+ 0).map { case (x, y) => (x, x < y) }
 ```
