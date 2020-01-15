@@ -108,3 +108,14 @@ Given a sequence words:Seq[String] of words, compute a sequence of type Seq[ (Se
 // words.groupBy(_.length).toSeq.map { case (len, word) => (word, len) }
 words.groupBy(_.length).toSeq.map(_.swap)
 ```
+
+
+#### 2.1.7.1
+```scala
+s.flatMap{ i => s.map { j => (i + 4 * j, i * j) } }.filter { case (x, y) => x > y }
+```
+
+#### 2.1.7.2
+```scala
+s.flatMap{ i => s.flatMap { j => s.map { k => (i + 4 * j + 9 * k, i * j * k) } } }.filter { case (x, y) => x > y }
+```
