@@ -253,7 +253,7 @@ val q: Seq[List[Int]] = p.map(s => s.sortBy(s => s)(Ordering[Int].reverse).take(
 
 (b) Implement this computation as a function with type parameters `I`, `J` instead of `Int`. The required type signature and a sample test:
 
-```
+```scala
 def cartesian[I,J](p: Set[I], q: Set[J]): Set[(I, J)] = ???
 
 scala> cartesian(Set("a", "b"), Set(10, 20))
