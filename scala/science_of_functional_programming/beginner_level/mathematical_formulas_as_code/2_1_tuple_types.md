@@ -280,8 +280,8 @@ def cartesian[I, J](p: Set[I], q: Set[J]): Set[(I, J)] = {
 ```
 ---
 #### 2.1.7.12
-Given a Seq[Map[Person, Amount]], showing the amounts various people paid on
-each day, compute a Map[Person, Seq[Amount]], showing the sequence of payments for each person.
+Given a `Seq[Map[Person, Amount]]`, showing the amounts various people paid on
+each day, compute a `Map[Person, Seq[Amount]]`, showing the sequence of payments for each person.
 Assume that Person and Amount are type parameters. The required type signature and a sample test:
 
 ```scala
