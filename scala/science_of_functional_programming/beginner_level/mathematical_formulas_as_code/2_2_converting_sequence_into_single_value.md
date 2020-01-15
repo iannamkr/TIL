@@ -1,8 +1,11 @@
 # 2.2 Converting a sequence into a single value
 
-- `.map`, `.zip`을 활용하여 다양한 sequence 문제를 해결할 수 있으나, sequence 의 총 합을 구하는 문제는 해결할 수 없다. 
+- `.map`, `.zip`을 활용하여 다양한 sequence 문제를 해결할 수 있으나 sequence 의 총 합을 구하는 문제는 해결할 수 없다. 
 (`.map`, `.zip`, `.filter`와 같은 함수는 sequence로부터 새로운 sequence를 연산한다.)
-- Scala에서는 sequence으로부터 single value 를 계산하는 `.count`, `.length`, `.max` 와 같은 함수를 제공하지만 이 함수들을 활용해도 `.sum`을 구현할 수 없다.
+
+- Scala에서는 sequence으로부터 single value 를 계산하는 `.count`, `.length`, `.max` 와 같은 함수를 제공하지만 
+이 함수들을 활용해도 `.sum`을 구현할 수 없다.
+
 - `.map`, `sum` 등으로 해결할 수 없는 또 다른 문제로는 부동소수점연산이다.
 
 ```scala
