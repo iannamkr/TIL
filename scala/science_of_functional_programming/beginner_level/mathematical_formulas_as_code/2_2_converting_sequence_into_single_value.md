@@ -65,7 +65,7 @@ xs에 x 가 추가된 하나 이상의 sequence xs (`xs ++ Seq(x)`) 에 대해 �
 digitsToInt(xs ++ Seq(x)) == digitsToInt(xs) * 10 + x
 ```
 
-### `.length`
+#### `.length`
 1. _For an empty sequence..._
 - empty sequence 인 경우 값은 0이다.
 
@@ -74,7 +74,7 @@ digitsToInt(xs ++ Seq(x)) == digitsToInt(xs) * 10 + x
 (xs ++ Seq(x)).length == xs.length + 1
 ```
 
-### `.max`
+#### `.max`
 1. _For a one-element sequence..._
 - Seq(x).max == x
 
@@ -83,7 +83,7 @@ digitsToInt(xs ++ Seq(x)) == digitsToInt(xs) * 10 + x
 (xs ++ Seq(x)).max = math.max(xs.max, x)
 ```
 
-### `.count`
+#### `.count`
 1. _For an empty sequence..._
 - Seq().count(p) == 0
 
@@ -92,8 +92,8 @@ digitsToInt(xs ++ Seq(x)) == digitsToInt(xs) * 10 + x
 (xs ++ Seq(x)).count(p) == xs.count(p) + c
 ```
 
-위와 같은 수학적 귀납정의를 code로 작성하는 데는 두 가지 방법이 있다. 첫 번째는 재귀함수를 작성하는 것이다. 
-두 번째는 `foldLeft`, `reduce` 같은 standard library function을 사용하는 것이다. 
+**위와 같은 수학적 귀납정의를 code로 작성하는 데는 두 가지 방법이 있다. 첫 번째는 재귀함수를 작성하는 것이고 
+두 번째는 `foldLeft`, `reduce` 같은 standard library function을 사용하는 것이다.**
 
 대부분의 경우는 standard library function을 사용하는 것이 좋지만 때때로 명시적 재귀함수를 사용하는 것이 더 명료할때도 있다. 
 
@@ -186,4 +186,87 @@ lengthT(Seq(1,2,3), 0)
 = lengthT(Seq(), 1 + 2) // = lengthT(Seq(), 3)
 = 3
 ```
-해설) 
+
+해설) 모든 sub-expression (1+1, 1+2)은 재귀호출 이전에 연산이 되므로 stack memory를 증가시키지 않는다. 이 점이 tail recursion의 주된 이점이다. 
+`lengthS`, `lengthT` 함수의 중요한 차이는 `accumulator argument` 의 유무이다. 이 전달인자는 각 재귀함수의 중간 결과이다. 다음 연산의 결과는 이 accumulator argument에 합산되어 다음 재귀호출로 전달된다. `base case` 조건에 도달하면 모든 연산이 종료되었으므로 함수는 최종적으로 0 이 아닌 `accumulator argument res`를 리턴하고 종료횐다.
+
+**이처럼 `accumulator argument`를 추가하여 `tail recursion`을 구현하는 것을 `accumulator technique` 또는 `accumulator trick`이라고 부른다.**
+
+추가적으로 `accumulator trick`을 사용하는 함수 `lengthT`는 반드시 `accumulator argument`를 필요로 한다. 단 초기 `accumulator value` 값을 지정하면 추가적인 전달인자 없이 `length(s) = lengthT(s, ???)`를 정의할 수 있다.
+
+아래와 같이 두 개의 함수를 정의한다. `tail-recursion` 함수인 `lengthT`와 `accumulator argument`의 초기값을 셋팅해줄 `adaper` 함수이다. 
+
+```scala
+def length[A](s: Seq[A]): Int = {
+    @tailrec def lengthT(s: Seq[A], res: Int): Int = {
+        if (s == Seq()) res
+        else lengthT(s.tail, 1 + res)
+    }
+    lengthT(s, 0)
+}
+```
+
+또는 scala의 `default value`를 사용하는 것이다.
+
+```scala
+@tailrec def length[A](s: Seq[A], res: Int = 0): Int =
+    if (s == Seq()) res
+    else length(s.tail, 1 + res)
+```
+
+`default value`를 함수의 전달인자로 전달하는 것으로 두 개의 함수를 선언하지 않고 동일한 코드를 간결하게 작성하였다. 
+
+`accumulator` 트릭은 많은 경우에 잘 동작하지만 `accumulator argument`와 그 초기 값을 어떻게 해야할지, `accumulator`를 위한 `inductive step`을 어떻게 정의할지가 분명하지 않을 수 있다. 
+
+`accumulator trick`은 결합법칙(associativity law)이 존재하기 때문에 동작한다. 이 원리를 적용하면 아래와 같이 재귀호출 함수를 외부에서부터 호출되도록 순서를 재정렬할 수 있다. (그러나 모든 연산이 결합법칙(associativity law)을 따르는 것은 아니다.)
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=r&space;=&space;d_{n-1}&space;&plus;&space;10&space;*&space;(d_{n-2}&space;&plus;&space;10&space;*&space;(d_{n-3}&space;&plus;&space;10&space;*&space;(...d_{0})))" target="_blank"><img src="https://latex.codecogs.com/gif.latex?r&space;=&space;d_{n-1}&space;&plus;&space;10&space;*&space;(d_{n-2}&space;&plus;&space;10&space;*&space;(d_{n-3}&space;&plus;&space;10&space;*&space;(...d_{0})))" title="r = d_{n-1} + 10 * (d_{n-2} + 10 * (d_{n-3} + 10 * (...d_{0})))" /></a>
+
+- rewrite...
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=r&space;=&space;((d_{0}&space;*&space;10&space;&plus;&space;d_{1})&space;*&space;10&space;&plus;&space;...)&space;*&space;10&space;&plus;&space;d_{n-1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?r&space;=&space;((d_{0}&space;*&space;10&space;&plus;&space;d_{1})&space;*&space;10&space;&plus;&space;...)&space;*&space;10&space;&plus;&space;d_{n-1}" title="r = ((d_{0} * 10 + d_{1}) * 10 + ...) * 10 + d_{n-1}" /></a>
+
+```scala
+@tailrec def fromDigits(s: Seq[Int], res:Int = 0): Int = 
+   if ( s == Seq() ) res
+   else fromDigits(s.tail, 10 * res + s.head) 
+```
+
+#### Statement 2.2.3.1 모든 xs: Seq[Int], r: Int 에 대하여 아래 식을 만족한다.
+`fromDigits(xs, r) = digitsToInt(xs) + r * math.pow(10, s.length)`
+
+```scala
+@tailrec def fromDigits(s: Seq[Int], res:Int = 0): Int = 
+   if ( s == Seq() ) res
+   else fromDigits(s.tail, 10 * res + s.head) 
+   
+   
+def digitsToInt(s: Seq[Int]): Int = if (s == Seq()) 0 else {
+    val x = s.last // To split s = xs ++ Seq(x), compute x
+    val xs = s.take(s.length - 1) // and xs.
+    digitsToInt(xs) * 10 + x // Call digitstoInt(...) recursively.
+}
+```
+
+증명) 귀납을 통해 증명한다. 
+let. d(s) == digitsToInt(s), f(s, r) == fromDigitsT(s, r), length(s) == |s|
+
+f(s, r) 에 대한 귀납적 정의는 다음과 같다. 
+
+(2.1) <a href="https://www.codecogs.com/eqnedit.php?latex=f([],&space;r)&space;=&space;r,&space;\&space;\&space;\&space;\&space;\&space;f([x]&plus;&plus;s,&space;r)&space;=&space;f(s,&space;10*r&plus;x)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f([],&space;r)&space;=&space;r,&space;\&space;\&space;\&space;\&space;\&space;f([x]&plus;&plus;s,&space;r)&space;=&space;f(s,&space;10*r&plus;x)" title="f([], r) = r, \ \ \ \ \ f([x]++s, r) = f(s, 10*r+x)" /></a>
+
+`fromDigits(xs, r) = digitsToInt(xs) + r * math.pow(10, s.length)` 의 정의는 다음과 같다. 
+
+(2.2) <a href="https://www.codecogs.com/eqnedit.php?latex=f(s,&space;r)&space;=&space;d(s)&space;&plus;&space;r&space;*&space;10^{\left&space;|&space;s&space;\right&space;|}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f(s,&space;r)&space;=&space;d(s)&space;&plus;&space;r&space;*&space;10^{\left&space;|&space;s&space;\right&space;|}" title="f(s, r) = d(s) + r * 10^{\left | s \right |}" /></a>
+
+
+귀납을 통해 (2.2)가 같음을 증명. s가 [] 인 경우 (base case) <a href="https://www.codecogs.com/eqnedit.php?latex=f([],&space;r)&space;=&space;r\&space;and\&space;d([])&space;&plus;&space;r&space;*&space;10^{0}&space;=&space;r" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f([],&space;r)&space;=&space;r\&space;and\&space;d([])&space;&plus;&space;r&space;*&space;10^{0}&space;=&space;r" title="f([], r) = r\ and\ d([]) + r * 10^{0} = r" /></a> 식을 만족한다. 
+
+따라서, base case인 경우 
+
+
+
+
+
+
+
