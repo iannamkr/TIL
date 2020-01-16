@@ -260,7 +260,7 @@ f(s, r) 에 대한 귀납적 정의는 다음과 같다.
 (2.2) <a href="https://www.codecogs.com/eqnedit.php?latex=f(s,&space;r)&space;=&space;d(s)&space;&plus;&space;r&space;*&space;10^{\left&space;|&space;s&space;\right&space;|}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f(s,&space;r)&space;=&space;d(s)&space;&plus;&space;r&space;*&space;10^{\left&space;|&space;s&space;\right&space;|}" title="f(s, r) = d(s) + r * 10^{\left | s \right |}" /></a>
 
 
-귀납을 통해 (2.2)가 같음을 증명. s가 [] 인 경우 (base case) <a href="https://www.codecogs.com/eqnedit.php?latex=f([],&space;r)&space;=&space;r\&space;and\&space;d([])&space;&plus;&space;r&space;*&space;10^{0}&space;=&space;r" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f([],&space;r)&space;=&space;r\&space;and\&space;d([])&space;&plus;&space;r&space;*&space;10^{0}&space;=&space;r" title="f([], r) = r\ and\ d([]) + r * 10^{0} = r" /></a> 식을 만족한다. 
+귀납을 통해 (2.2)가 같음을 증명한다. s가 [] 인 경우 (base case) <a href="https://www.codecogs.com/eqnedit.php?latex=f([],&space;r)&space;=&space;r\&space;and\&space;d([])&space;&plus;&space;r&space;*&space;10^{0}&space;=&space;r" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f([],&space;r)&space;=&space;r\&space;and\&space;d([])&space;&plus;&space;r&space;*&space;10^{0}&space;=&space;r" title="f([], r) = r\ and\ d([]) + r * 10^{0} = r" /></a> 식을 만족한다. 
 
 따라서, base case인 경우 
 
