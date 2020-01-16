@@ -24,7 +24,7 @@ def digitsToInt(ds: Seq[Int]): Int = {
 scala> digitsToInt(Seq(2,4,0,5))
 res0: Int = 2405
 ```
-
+---
 ### 2.2.1 집계 함수의 귀납정의 (Inductive definitions of aggregation functions)
 
 수학적 귀납법은 이전 값을 통해 다음 값을 계산하기 위해 사용되는 방법 중 하나이다. 
@@ -74,7 +74,6 @@ digitsToInt(xs ++ Seq(x)) == digitsToInt(xs) * 10 + x
 (xs ++ Seq(x)).length == xs.length + 1
 ```
 
-
 ### `.max`
 1. _For a one-element sequence..._
 - Seq(x).max == x
@@ -83,7 +82,6 @@ digitsToInt(xs ++ Seq(x)) == digitsToInt(xs) * 10 + x
 ```scala
 (xs ++ Seq(x)).max = math.max(xs.max, x)
 ```
-
 
 ### `.count`
 1. _For an empty sequence..._
@@ -99,7 +97,7 @@ digitsToInt(xs ++ Seq(x)) == digitsToInt(xs) * 10 + x
 
 대부분의 경우는 standard library function을 사용하는 것이 좋지만 때때로 명시적 재귀함수를 사용하는 것이 더 명료할때도 있다. 
 
-
+---
 ### 2.2.2 재귀를 통한 함수의 구현 (Implementing functions by recursion)
 
 - 수학적 귀납을 코드로 작성할때 가장 먼저 판단해야할 것은 귀납에서의 `base case`와 `induction step` 조건을 찾는 것이다. 
@@ -131,7 +129,7 @@ Seq() == 0
 
 두 번째 문제는 재귀적으로 호출되는 함수에 `base case`를 확인하는 코드와 sequence s를 subsequnce xs와 element x로 분리하는 코드가 계속적으로 반복하는 것이다. 이러한 반복적인 코드는 scala library function을 사용하여 대체할 수 있다. 
 
-
+---
 ### 2.2.3 Tail recursion
 다음은 위에서 언급한 "stack overflow"를 발생하는 재귀함수의 예이다.
 ```scala
@@ -161,7 +159,7 @@ lengthS(Seq(1, 2, ..., 100000))
 = ...
 ```
 
-위와 같은 "stack overflow" 문제를 회피하는 방법은 `tail recursion` 트릭을 사용하는 것이다. `tail recursion`을 사용한다는 의미는
+해설) 위와 같은 "stack overflow" 문제를 회피하는 방법은 `tail recursion` 트릭을 사용하는 것이다. `tail recursion`을 사용한다는 의미는
 모든 재귀 호출이 함수의 끝 위치에서 발생하도록 코드를 다시 작성하는 것이다. 다시 말해서 각 재귀호출은 그 자체가 마지막 연산이어야한다는 것이다. 
 
 ```scala
@@ -171,7 +169,7 @@ def lengthT(s: Seq[Int], res: Int): Int =
     else
         lengthT(s.tail, 1 + res)
 ```
-해설) 위 코드에서는 모든 branch가 항상 추가적인 재귀호출 없이 고정적인 값을 리턴한다. 
+ 위 코드에서는 모든 branch가 항상 추가적인 재귀호출 없이 고정적인 값을 리턴한다. 
 재귀호출에서 `lengthT`함수가 `1 + res`와 같은 sub-expression을 갖는 것은 문제가 되지 않는다. 왜냐하면 모든 sub-expression은 `lengthT`함수가 재귀적으로 호출되기 이전에 계산되기 때문이다. 
 
 **tail-recursion 에서는 수 많은 if/else, match/case branch가 존재할 수 있다. 그러나 모든 재귀호출은 항상 마지막으로 반환된 식이어야 한다.** scala compiler에서는 이를 자동으로 확인해주는 annotation인 `@tailrec`을 제공한다.
