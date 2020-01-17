@@ -232,46 +232,31 @@ def length[A](s: Seq[A]): Int = {
    else fromDigits(s.tail, 10 * res + s.head) 
 ```
 
----
-#### Statement 2.2.3.1 
+#### 2.2.4 Implementing general aggregation (foldLeft)
 
-임의의 xs: Seq[Int], r: Int 에 대하여 `fromDigits(xs, r) = digitsToInt(xs) + r * math.pow(10, s.length)` 식이 참일때 
+집계(aggregation)은 sequence를 single value로 변환한다. 결과값에 대한 type은 sequence 의 각 element의 type 과 다를 수 있다. 
+seq[A]에 대해 집계 결과 값을 type B 라고 할때, 함수 f: Seq[A] => B 에 대한 귀납함수의 정의는 아래와 같다.
+
+- base case: 빈 sequence 에 대하여 `f(Seq()) = b0` 를 만족한다.
+- inductive step: f(xs) = b 가 참일때, `f(xs ++ Seq(s)) = g(x, b)` 를 만족한다. 이때 함수 g의 signature는 다음과 같다. `g:(A, B) => B` 
+
+이를 코드로 작성하면 다음과 같다.
 
 ```scala
-@tailrec def fromDigits(s: Seq[Int], res:Int = 0): Int = 
-   if ( s == Seq() ) res
-   else fromDigits(s.tail, 10 * res + s.head) 
-   
-   
-def digitsToInt(s: Seq[Int]): Int = if (s == Seq()) 0 else {
-    val x = s.last // To split s = xs ++ Seq(x), compute x
-    val xs = s.take(s.length - 1) // and xs.
-    digitsToInt(xs) * 10 + x // Call digitstoInt(...) recursively.
-}
+def f[A, B](s: Seq[A]): B = 
+    if (s == Seq()) b0
+    else g(s.last, f(s.take(s.length -1)))
 ```
 
-증명) 위 식을 귀납을 통해 증명해보자.  
-let. d(s) == digitsToInt(s), f(s, r) == fromDigitsT(s, r), length(s) == |s|
+위 함수를 generic utility function으로 refactoring 하면 아래와 같다.
 
-f(s, r) 에 대한 귀납적 정의는 다음과 같다. 
+```scala
+def f[A, B](s: Seq[A], b: B, g: (A, B) => B): B = 
+    if (s == Seq()) b
+    else g(s.last, f(s.take(s.length - 1), b, g)
+```
 
-(2.1) <a href="https://www.codecogs.com/eqnedit.php?latex=f([],&space;r)&space;=&space;r,&space;\&space;\&space;\&space;\&space;\&space;f([x]&plus;&plus;s,&space;r)&space;=&space;f(s,&space;10*r&plus;x)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f([],&space;r)&space;=&space;r,&space;\&space;\&space;\&space;\&space;\&space;f([x]&plus;&plus;s,&space;r)&space;=&space;f(s,&space;10*r&plus;x)" title="f([], r) = r, \ \ \ \ \ f([x]++s, r) = f(s, 10*r+x)" /></a>
-
-`fromDigits(xs, r) = digitsToInt(xs) + r * math.pow(10, s.length)` 의 정의는 다음과 같다. 
-
-(2.2) <a href="https://www.codecogs.com/eqnedit.php?latex=f(s,&space;r)&space;=&space;d(s)&space;&plus;&space;r&space;*&space;10^{\left&space;|&space;s&space;\right&space;|}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f(s,&space;r)&space;=&space;d(s)&space;&plus;&space;r&space;*&space;10^{\left&space;|&space;s&space;\right&space;|}" title="f(s, r) = d(s) + r * 10^{\left | s \right |}" /></a>
-
-
-귀납을 통해 (2.2)가 같음을 증명한다. 
-
-1. base case: s가 [] 인 경우 <a href="https://www.codecogs.com/eqnedit.php?latex=f([],&space;r)&space;=&space;r\&space;and\&space;d([])&space;&plus;&space;r&space;*&space;10^{0}&space;=&space;r" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f([],&space;r)&space;=&space;r\&space;and\&space;d([])&space;&plus;&space;r&space;*&space;10^{0}&space;=&space;r" title="f([], r) = r\ and\ d([]) + r * 10^{0} = r" /></a> 식을 만족한다. 
-
-2. induction step
-
-
-
-
-
+그러나 위 코드는 `tail recursion`이 아니다. sequence s 의 크기가 충분히 큰 경우 연산이 불가능할것이다. `tail recursion` 형태로 재정렬하기 위해서 
 
 
 
