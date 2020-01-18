@@ -54,7 +54,7 @@ xs에 x 가 추가된 하나 이상의 sequence xs (`xs ++ Seq(x)`) 에 대해 �
 따라서, 이를 code로 작성하면 `(xs ++ Seq(x)).sum == xs.sum + x` 이다.
 
 
-#### `digitsToInt` 
+#### `.digitsToInt` 
 
 1. _For an empty sequence..._
 - empty sequence 인 경우 값은 0이다.
@@ -281,6 +281,69 @@ def sum(s: Seq[Int]): Int = s.foldLeft(0) { (x, y) => x + y }
 def count[A](s: Seq[A], p: A => Boolean): Int = s.foldLeft(0) { (x, y) => x + (if (p(y)) 1 else 0) }
 ```
 
+---
 
+### 2.2.5 `foldLef`의 examples
 
+#### 2.2.5.1
+Use `.foldLeft` for implementing __the max function__ for integer sequences. Return the
+special value Int.MinValue for empty sequences.
 
+```scala
+def max(s: Seq[Int]): Int = s.foldLeft(Int.MaxValue) { (a, b) => if(a >= b) a else b }
+// def max(s: Seq[Int]): Int = s.foldLeft(Int.MaxValue) { (a, b) => math.Max(a, b) }
+```
+---
+#### 2.2.5.2
+Implement __the count method on sequences__ of type `Seq[A]`.
+
+```scala
+val s = 1 to 10
+
+def count[A](s: Seq[A]): Int = s.foldLeft(0) { (x, y) =>
+  x match {
+    case _: Int => x + 1
+    case _ => x
+  }
+}
+
+def count[A](s: Seq[A], p: A => Boolean): Int = {
+  s.foldLeft(0) { (sum, x) => sum + (if (p(x)) 1 else 0) }
+}
+count(s, (x: Int) => x % 2 == 0)
+// 5
+```
+---
+#### 2.2.5.3 
+Implement the function `digitsToInt` using `.foldLeft`.
+`(1, 3, 2, 5, 2, 6, 0) => 1325260
+
+```scala
+val s: Seq[Int] = Seq(1, 3, 2, 5, 2, 6, 0)
+def digitsToInt(s: Seq[Int]): Int = s.foldLeft(0) { (sum, x) => sum * 10 + x }
+// 1325260
+```
+
+---
+
+#### 2.2.5.4
+For a given non-empty sequence xs: Seq[Double], compute the minimum, the maximum,
+and the mean as a tuple (xmin, xmax, xmean). The sequence should be traversed only once,
+_i.e. the code must be xs.foldLeft(...), using .foldLeft only once._
+
+`(xs.min, xs.max, xs.sum / xs.length` 와 같이 구할 수 있지만 최소 3번의 traverse가 필요하다. 
+한 번의 traversal로 min, max, mean을 구하는 함수를 작성한다. 
+
+```
+type d4 = (Double, Double, Double, Double)
+
+def update(p: d4, x: Double): d4 = p match {
+  case (min, max, sum, length) => (math.min(x, min), math.max(x, max), x + sum, length + 1)
+}
+
+def f(s: Seq[Double]): (Double, Double, Double) = {
+  val init = (0d, 0d, 0d, 0d)
+  val (min, max, sum, length) = s.foldLeft(init)(update)
+  (min, max, sum/length)
+}
+```
