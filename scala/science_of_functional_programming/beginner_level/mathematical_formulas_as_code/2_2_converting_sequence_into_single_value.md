@@ -331,7 +331,7 @@ For a given non-empty sequence xs: Seq[Double], compute the minimum, the maximum
 and the mean as a tuple (xmin, xmax, xmean). The sequence should be traversed only once,
 _i.e. the code must be xs.foldLeft(...), using .foldLeft only once._
 
-`(xs.min, xs.max, xs.sum / xs.length` 와 같이 구할 수 있지만 최소 3번의 traverse가 필요하다. 
+`(xs.min, xs.max, xs.sum / xs.length)` 와 같이 구할 수 있지만 최소 3번의 traverse가 필요하다. 
 한 번의 traversal로 min, max, mean을 구하는 함수를 작성한다. 
 
 ```
