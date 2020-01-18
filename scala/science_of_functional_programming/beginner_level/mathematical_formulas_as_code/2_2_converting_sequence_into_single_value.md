@@ -334,7 +334,7 @@ _i.e. the code must be xs.foldLeft(...), using .foldLeft only once._
 `(xs.min, xs.max, xs.sum / xs.length)` 와 같이 구할 수 있지만 최소 3번의 traverse가 필요하다. 
 한 번의 traversal로 min, max, mean을 구하는 함수를 작성한다. 
 
-```
+```scala
 type d4 = (Double, Double, Double, Double)
 
 def update(p: d4, x: Double): d4 = p match {
