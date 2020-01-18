@@ -234,7 +234,7 @@ def length[A](s: Seq[A]): Int = {
 
 #### 2.2.4 Implementing general aggregation (foldLeft)
 
-집계(aggregation)은 sequence를 single value로 변환한다. 결과값에 대한 type은 sequence 의 각 element의 type 과 다를 수 있다. 
+집계(aggregation)는 sequence를 single value로 변환한다. 결과값에 대한 type은 sequence 의 각 element의 type 과 다를 수 있다. 
 seq[A]에 대해 집계 결과 값을 type B 라고 할때, 함수 f: Seq[A] => B 에 대한 귀납함수의 정의는 아래와 같다.
 
 - base case: 빈 sequence 에 대하여 `f(Seq()) = b0` 를 만족한다.
@@ -243,20 +243,43 @@ seq[A]에 대해 집계 결과 값을 type B 라고 할때, 함수 f: Seq[A] => 
 이를 코드로 작성하면 다음과 같다.
 
 ```scala
-def f[A, B](s: Seq[A]): B = 
-    if (s == Seq()) b0
-    else g(s.last, f(s.take(s.length -1)))
+def f[A, B](s: Seq[A], b: B, g: (A, B) => B): B =
+    if (s == Seq()) b
+    else g(s.last, f(s.take(s.length - 1), b, g))
+
+val s = 1 to 1000000
+val r = f(s, 0, (x: Int, y: Int) => x + y)
+
+Exception in thread "main" java.lang.StackOverflowError
+	at scala.collection.IndexedSeqLike$class.iterator(IndexedSeqLike.scala:90)
+	at scala.collection.immutable.Range.iterator(Range.scala:61)
+	at scala.collection.IterableLike$class.sameElements(IterableLike.scala:292)
+	at scala.collection.AbstractIterable.sameElements(Iterable.scala:54)
+	at scala.collection.GenSeqLike$class.equals(GenSeqLike.scala:475)
+	at scala.collection.immutable.Range.equals(Range.scala:381)
 ```
 
-위 함수를 generic utility function으로 refactoring 하면 아래와 같다.
+그러나 위 코드는 `tail recursion`이 아니다. 위 처럼 sequence s 의 크기가 큰 경우 stackoverflow로 연산이 불가능하다. 
+`tail recursion` 형태로 변경하기 위해서 sequence의 가장 왼쪽에서부터 순회하도록 변경한다.
 
 ```scala
-def f[A, B](s: Seq[A], b: B, g: (A, B) => B): B = 
+@tailrec def leftFold[A, B](s: Seq[A], b: B, g: (B, A) => B): B = 
     if (s == Seq()) b
-    else g(s.last, f(s.take(s.length - 1), b, g)
+    else leftFold(s.tail, g(b, s.head), g)
+    
+val s = 1 to 1000000
+val r = leftFold(s, 0, (x: Int, y: Int) => x + y)
+
+1784293664
 ```
 
-그러나 위 코드는 `tail recursion`이 아니다. sequence s 의 크기가 충분히 큰 경우 연산이 불가능할것이다. `tail recursion` 형태로 재정렬하기 위해서 
+이처럼 "left fold"는 가장 왼쪽 element로부터 시작하여 집계를 한다. `leftFold` 함수는 수학적 귀납에 의해 논리적으로 정의된 aggregation 의 구현체이다. `leftFold` 함수를 사용하면 `.sum`, `.max`와 같은 수 많은 집계함수로 확장할 수 있는데, 이를 위해서는 초기 값 b와 변경함수 g 만 정의하면 된다. scala library 에 `.foldLeft` 함수를 제공하긴 한다.
+
+```scala
+def sum(s: Seq[Int]): Int = leftFold(s, 0, { (x, y) => x + y })
+def sum(s: Seq[Int]): Int = s.foldLeft(0) { (x, y) => x + y } 
+def count[A](s: Seq[A], p: A => Boolean): Int = s.foldLeft(0) { (x, y) => x + (if (p(y)) 1 else 0) }
+```
 
 
 
