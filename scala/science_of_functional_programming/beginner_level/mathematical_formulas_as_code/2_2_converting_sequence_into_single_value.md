@@ -194,7 +194,7 @@ lengthT(Seq(1,2,3), 0)
 
 추가적으로 `accumulator trick`을 사용하는 함수 `lengthT`는 반드시 `accumulator argument`를 필요로 한다. 단 초기 `accumulator value` 값을 지정하면 추가적인 전달인자 없이 `length(s) = lengthT(s, ???)`를 정의할 수 있다.
 
-아래와 같이 두 개의 함수를 정의한다. `tail-recursion` 함수인 `lengthT`와 `accumulator argument`의 초기값을 셋팅해줄 `adaper` 함수이다. 
+아래와 같이 두 개의 함수를 정의한다. `tail-recursion` 함수인 `lengthT`와 `accumulator argument`의 초기값을 셋팅해줄 `adapter` 함수이다. 
 
 ```scala
 def length[A](s: Seq[A]): Int = {
