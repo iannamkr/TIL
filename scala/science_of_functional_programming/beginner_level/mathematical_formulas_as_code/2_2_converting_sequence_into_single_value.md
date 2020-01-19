@@ -121,7 +121,7 @@ Seq() == 0
 ```scala
 (xs ++ Seq(x)).sum == xs.sum + x
 ```
-해설) sum 연산이서는 더하는 순서는 중요하지 않다. 그러나 연산의 순서는 중요할 수 있다. 따라서 `inductive step`에서는 `s = Seq(s) ++ xs` 또는 
+해설) sum 연산에서는 더하는 순서는 중요하지 않다. 그러나 연산의 순서는 중요할 수 있다. 따라서 `inductive step`에서는 `s = Seq(s) ++ xs` 또는 
 `s = xs ++ Seq(x)` 로 나눌 지 선택해야한다. 
 
 위와 같은 재귀적 접근 방식은 sequence가 충분히 큰 경우 자칫 "stack overflow" 문제를 발생시킬 수 있다. 다음 장에서는 "tail recursion"을 통해
