@@ -283,7 +283,7 @@ def count[A](s: Seq[A], p: A => Boolean): Int = s.foldLeft(0) { (x, y) => x + (i
 
 ---
 
-### 2.2.5 `foldLef`의 examples
+### 2.2.5 `foldLeft`의 Examples
 
 #### 2.2.5.1
 Use `.foldLeft` for implementing __the max function__ for integer sequences. Return the
@@ -325,9 +325,9 @@ def digitsToInt(s: Seq[Int]): Int = s.foldLeft(0) { (sum, x) => sum * 10 + x }
 ```
 ---
 #### 2.2.5.4
-For a given non-empty sequence xs: Seq[Double], compute the minimum, the maximum,
-and the mean as a tuple (xmin, xmax, xmean). The sequence should be traversed only once,
-_i.e. the code must be xs.foldLeft(...), using .foldLeft only once._
+For a given non-empty sequence `xs: Seq[Double]`, __compute the minimum, the maximum,
+and the mean as a tuple `(xmin, xmax, xmean)`__. The sequence should be traversed only once,
+_i.e. the code must be `xs.foldLeft(...)`, using `.foldLeft` only once._
 
 `(xs.min, xs.max, xs.sum / xs.length)` 와 같이 구할 수 있지만 최소 3번의 traverse가 필요하다. 
 한 번의 traversal로 min, max, mean을 구하는 함수를 작성한다. 
@@ -447,7 +447,7 @@ println(fromPairs(Seq((1, 2), (3, 4))))
 ```
 ---
 #### 2.2.6.2 
-Implement the flatten method for sequences by using .foldLeft. The required type
+Implement the flatten method for sequences by using `.foldLeft`. The required type
 signature and a sample test:
 
 ```
