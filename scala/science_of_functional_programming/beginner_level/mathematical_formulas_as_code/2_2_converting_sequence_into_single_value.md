@@ -361,17 +361,28 @@ Assume that all input characters are either digits or a dot (so, negative number
 - `xs.foldList(0)(updater)` pattern으로 접근하면 문제 해결이 쉬울 수 있다.
 
 ```scala
-// (wasDotAlreadySeen, accumulator variable. each element) 
 type d3 = (Boolean, Double, Double)
 
-def updater(acc: d3, c: Char): d3 = 
-  acc match { case (flag, n, f) => 
-    if (c == '.') {
-      (true, n, f)
-    } else {
-      (false, n + c / f, f * 10)
-    }
+def updater(acc: d3, c: Char): d3 = {
+  acc match {
+    case (flag, n, f) =>
+      if (c == '.') {
+        (true, n, f)
+      } else {
+        val d = c - '0'
+        if(flag) {
+          (flag, n + d / f, f * 10)
+        } else {
+          (flag, n * f + d, f)
+        }
+      }
   }
 }
 
+def digitsToDouble(d: Seq[Char]): Double = {
+  val initAccumulator = (false, 0.0, 10.0)
+  d.foldLeft(initAccumulator)(updater)._2
+}
+
+println(digitsToDouble(Seq('3', '4', '.', '2', '5')))
 ```
