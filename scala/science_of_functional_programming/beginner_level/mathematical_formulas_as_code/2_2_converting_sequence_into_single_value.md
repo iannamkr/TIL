@@ -347,3 +347,31 @@ def f(s: Seq[Double]): (Double, Double, Double) = {
   (min, max, sum/length)
 }
 ```
+
+
+#### 2.2.5.5
+Implement the function `digitsToDouble` using `.foldLeft`. The argument is of type
+`Seq[Char]`. As a test, the expression `digitsToDouble(Seq(’3’,’4’,’.’,’2’,’5’))` must evaluate to 34.25.
+Assume that all input characters are either digits or a dot (so, negative numbers are not supported).
+
+- 왼쪽부터 순차적으로 traverse 하면서 `.` 문자가 나타나기 전/후로 나누어 처리함
+  - Before the dot:	g(n, c) = n * 10 + c
+  - After the dot:	g(n, c) = n + c/f, where f is 10, 100, 1000, ...,  
+  
+- `xs.foldList(0)(updater)` pattern으로 접근하면 문제 해결이 쉬울 수 있다.
+
+```scala
+// (wasDotAlreadySeen, accumulator variable. each element) 
+type d3 = (Boolean, Double, Double)
+
+def updater(acc: d3, c: Char): d3 = 
+  acc match { case (flag, n, f) => 
+    if (c == '.') {
+      (true, n, f)
+    } else {
+      (false, n + c / f, f * 10)
+    }
+  }
+}
+
+```
