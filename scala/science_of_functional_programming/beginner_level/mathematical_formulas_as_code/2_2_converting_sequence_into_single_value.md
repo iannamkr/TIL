@@ -323,9 +323,7 @@ val s: Seq[Int] = Seq(1, 3, 2, 5, 2, 6, 0)
 def digitsToInt(s: Seq[Int]): Int = s.foldLeft(0) { (sum, x) => sum * 10 + x }
 // 1325260
 ```
-
 ---
-
 #### 2.2.5.4
 For a given non-empty sequence xs: Seq[Double], compute the minimum, the maximum,
 and the mean as a tuple (xmin, xmax, xmean). The sequence should be traversed only once,
@@ -347,8 +345,7 @@ def f(s: Seq[Double]): (Double, Double, Double) = {
   (min, max, sum/length)
 }
 ```
-
-
+---
 #### 2.2.5.5
 Implement the function `digitsToDouble` using `.foldLeft`. The argument is of type
 `Seq[Char]`. As a test, the expression `digitsToDouble(Seq(’3’,’4’,’.’,’2’,’5’))` must evaluate to 34.25.
@@ -386,3 +383,88 @@ def digitsToDouble(d: Seq[Char]): Double = {
 
 println(digitsToDouble(Seq('3', '4', '.', '2', '5')))
 ```
+---
+#### 2.2.5.6
+Implement the `.map` method for sequences by using `.foldLeft`. The input sequence
+should be of type `Seq[A]` and the output sequence of type `Seq[B]`, where A and B are type parameters.
+The required type signature of the function and a sample test
+```
+def map[A, B](xs: Seq[A])(f: A => B): Seq[B] = ???
+
+scala> map(List(1, 2, 3)) { x => x * 10 }
+res0: Seq[Int] = List(10, 20, 30)
+```
+hint: using :+ operator
+`acc :+ f(x) === acc ++ Seq(f(x))`
+
+```scala
+def map[A, B](xs: Seq[A])(f: A => B): Seq[B] = {
+  xs.foldLeft(Seq[B]()){ (acc, x) => acc :+ f(x) }
+}
+```
+---
+#### 2.2.5.7
+Implement a function toPairs that converts a sequence of type `Seq[A]` to a sequence
+of pairs, `Seq[(A, A)]`, by putting together the adjacent elements pairwise. __If the initial sequence has
+an odd number of elements, a given default value of type A is used to fill the last pair__. The required
+type signature and an example test:
+
+```
+def toPairs[A](xs: Seq[A], default: A): Seq[(A, A)] = ???
+
+scala> toPairs(Seq(1, 2, 3, 4, 5, 6), -1)
+res0: Seq[(Int, Int)] = List((1,2), (3,4), (5,6))
+
+scala> toPairs(Seq("a", "b", "c"), "<nothing>")
+res1: Seq[(String, String)] = List((a,b), (c,<nothing>))
+```
+
+> 아.. 난관에 봉착했다..
+
+---
+
+### 2.2.6 Exercises
+#### 2.2.6.1
+Implement a function `fromPairs` that performs the inverse transformation to the
+toPairs function defined in _Example 2.2.5.7_. The required type signature and a sample test:
+
+```
+def fromPairs[A](xs: Seq[(A, A)]): Seq[A] = ???
+
+scala> fromPairs(Seq((1, 2), (3, 4)))
+res0: Seq[Int] = List(1, 2, 3, 4)
+```
+
+```scala
+def fromPairs[A](xs: Seq[(A, A)]): Seq[A] = {
+  xs.foldLeft(Seq[A]()){ case (a, (b, c)) => 
+    a :+b :+ c
+  }
+}
+println(fromPairs(Seq((1, 2), (3, 4))))
+
+//List(1, 2, 3, 4)
+```
+---
+#### 2.2.6.2 
+Implement the flatten method for sequences by using .foldLeft. The required type
+signature and a sample test:
+
+```
+def flatten[A](xxs: Seq[Seq[A]]): Seq[A] = ???
+
+scala> flatten(Seq(Seq(1, 2, 3), Seq(), Seq(4)))
+res0: Seq[Int] = List(1, 2, 3, 4)
+```
+
+```scala
+def flatten[A](xxs: Seq[Seq[A]]): Seq[A] = 
+  xxs.foldLeft(Seq[A]()) { case (acc, xs) =>   xs ++: acc }
+  
+println(flatten(Seq(Seq(1, 2, 3), Seq(), Seq(4))))
+println(flatten(Seq(Seq(1, "hello", 3), Seq(), Seq('a'))))
+
+// List(4, 1, 2, 3)
+// List(a, 1, hello, 3)
+```
+---
