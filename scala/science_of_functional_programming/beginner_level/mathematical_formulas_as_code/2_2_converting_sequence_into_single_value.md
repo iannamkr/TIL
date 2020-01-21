@@ -520,3 +520,21 @@ println(filterMap(Seq(1, 2, 3, 4)) { x => x > 2 } { x => x * 10 })
 // List(30, 40)
 ```
 --- 
+#### 2.2.6.5
+Split a sequence into subsequences (“batches”) of length not larger than a given
+maximum length n. The required type signature and a sample test:
+
+```
+def byLength[A](xs: Seq[A], length: Int): Seq[Seq[A]] = ???
+
+scala> byLength(Seq("a", "b", "c", "d"), 2)
+res0: Seq[Seq[String]] = List(List(a, b), List(c, d))
+
+scala> byLength(Seq(1, 2, 3, 4, 5, 6, 7), 3)
+res1: Seq[Seq[Int]] = List(List(1, 2, 3), List(4, 5, 6), List(7))
+```
+
+**Solution**
+```scala
+
+```
