@@ -289,6 +289,7 @@ def count[A](s: Seq[A], p: A => Boolean): Int = s.foldLeft(0) { (x, y) => x + (i
 Use `.foldLeft` for implementing __the max function__ for integer sequences. Return the
 special value Int.MinValue for empty sequences.
 
+**Solution**
 ```scala
 def max(s: Seq[Int]): Int = s.foldLeft(Int.MaxValue) { (a, b) => if(a >= b) a else b }
 // def max(s: Seq[Int]): Int = s.foldLeft(Int.MaxValue) { (a, b) => math.Max(a, b) }
@@ -297,6 +298,7 @@ def max(s: Seq[Int]): Int = s.foldLeft(Int.MaxValue) { (a, b) => if(a >= b) a el
 #### 2.2.5.2
 Implement __the count method on sequences__ of type `Seq[A]`.
 
+**Solution**
 ```scala
 val s = 1 to 10
 
@@ -318,6 +320,7 @@ count(s, (x: Int) => x % 2 == 0)
 Implement the function `digitsToInt` using `.foldLeft`.
 `(1, 3, 2, 5, 2, 6, 0) => 1325260
 
+**Solution**
 ```scala
 val s: Seq[Int] = Seq(1, 3, 2, 5, 2, 6, 0)
 def digitsToInt(s: Seq[Int]): Int = s.foldLeft(0) { (sum, x) => sum * 10 + x }
@@ -332,6 +335,7 @@ _i.e. the code must be `xs.foldLeft(...)`, using `.foldLeft` only once._
 `(xs.min, xs.max, xs.sum / xs.length)` 와 같이 구할 수 있지만 최소 3번의 traverse가 필요하다. 
 한 번의 traversal로 min, max, mean을 구하는 함수를 작성한다. 
 
+**Solution**
 ```scala
 type d4 = (Double, Double, Double, Double)
 
@@ -357,6 +361,7 @@ Assume that all input characters are either digits or a dot (so, negative number
   
 - `xs.foldList(0)(updater)` pattern으로 접근하면 문제 해결이 쉬울 수 있다.
 
+**Solution**
 ```scala
 type d3 = (Boolean, Double, Double)
 
@@ -397,6 +402,7 @@ res0: Seq[Int] = List(10, 20, 30)
 hint: using :+ operator
 `acc :+ f(x) === acc ++ Seq(f(x))`
 
+**Solution**
 ```scala
 def map[A, B](xs: Seq[A])(f: A => B): Seq[B] = {
   xs.foldLeft(Seq[B]()){ (acc, x) => acc :+ f(x) }
@@ -435,6 +441,7 @@ scala> fromPairs(Seq((1, 2), (3, 4)))
 res0: Seq[Int] = List(1, 2, 3, 4)
 ```
 
+**Solution**
 ```scala
 def fromPairs[A](xs: Seq[(A, A)]): Seq[A] = {
   xs.foldLeft(Seq[A]()){ case (a, (b, c)) => 
@@ -457,6 +464,7 @@ scala> flatten(Seq(Seq(1, 2, 3), Seq(), Seq(4)))
 res0: Seq[Int] = List(1, 2, 3, 4)
 ```
 
+**Solution**
 ```scala
 def flatten[A](xxs: Seq[Seq[A]]): Seq[A] = 
   xxs.foldLeft(Seq[A]()) { case (acc, xs) =>   xs ++: acc }
@@ -468,3 +476,47 @@ println(flatten(Seq(Seq(1, "hello", 3), Seq(), Seq('a'))))
 // List(a, 1, hello, 3)
 ```
 ---
+#### 2.2.6.3
+Use .foldLeft to implement the zipWithIndex method for sequences. The required
+type signature and a sample test
+
+```
+def zipWithIndex[A](xs: Seq[A]): Seq[(A, Int)] = ???
+
+scala> zipWithIndex(Seq("a", "b", "c", "d"))
+res0: Seq[String] = List((a, 0), (b, 1), (c, 2), (d, 3))
+```
+
+**Solution**
+```scala
+def zipWithIndex[A](xs: Seq[A]): Seq[(A, Int)] = {
+  xs.foldLeft(Seq[(A, Int)]()){ case (acc, x) => acc :+ (x, acc.length) }
+}
+
+print(zipWithIndex(Seq("a", "b", "c", "d")))
+
+//List((a,0), (b,1), (c,2), (d,3))
+```
+---
+#### 2.2.6.4
+Use .foldLeft to implement a function filterMap that combines .map and .filter for
+sequences. The required type signature and a sample test
+
+```
+def filterMap[A, B](xs: Seq[A])(pred: A => Boolean)(f: A => B): Seq[B] = ???
+
+scala> filterMap(Seq(1, 2, 3, 4)) { x => x > 2 } { x => x * 10 }
+res0: Seq[Int] = List(30, 40)
+```
+
+**Solution**
+```scala
+def filterMap[A, B](xs: Seq[A])(pred: A => Boolean)(f: A => B): Seq[B] = {
+  xs.foldLeft(Seq[B]()){ case(acc, x) => if(pred(x)) acc :+ f(x) else acc }
+}
+
+println(filterMap(Seq(1, 2, 3, 4)) { x => x > 2 } { x => x * 10 })
+  
+// List(30, 40)
+```
+--- 
