@@ -536,5 +536,45 @@ res1: Seq[Seq[Int]] = List(List(1, 2, 3), List(4, 5, 6), List(7))
 
 **Solution**
 ```scala
+def byLength[A](xs: Seq[A], length: Int): Seq[Seq[A]] = {
+  xs.sliding(length, length).toList
+}
+```
+> .foldLeft를 써서 풀어야 하는 문제인거였나?? 흠
+---
+#### 2.2.6.6
+Split a sequence into batches by “weight” computed via a given function. The
+total weight of items in any batch should not be larger than a given maximum weight. The required
+type signature and a sample test:
 
+```
+def byWeight[A](xs: Seq[A], maxW: Double)(w: A => Double): Seq[Seq[A]] = ???
+
+scala> byWeight((1 to 10).toList, 5.75){ x => math.sqrt(x) }
+res0: Seq[Seq[Int]] = List(List(1, 2, 3), List(4, 5), List(6, 7), List(8), List(9), List(10))
+```
+
+**Solution**
+```scala
+def byWeight[A](xs: Seq[A], maxW: Double)(w: A => Double): Seq[Seq[A]] = ???
+
+```
+
+---
+#### 2.2.6.7
+Use .foldLeft to implement a groupBy function. The type signature and a test:
+
+```
+def groupBy[A, K](xs: Seq[A])(by: A => K): Map[K, Seq[A]] = ???
+
+scala> groupBy(Seq(1, 2, 3, 4, 5)){ x => x % 2 }
+res0: Map[Int, Seq[Int]] = Map(1 -> List(1, 3, 5), 0 -> List(2, 4))
+```
+
+Hints: The accumulator should be of type Map[K, Seq[A]]. To work with dictionaries, you will need
+to use the methods .getOrElse and .updated. The method .getOrElse fetches a value from a dictionary
+by key, and returns the given default value if the dictionary does not contain that key:
+
+**Solution**
+```scala
 ```
