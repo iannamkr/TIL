@@ -1,7 +1,7 @@
 # 2.3 Converting a single value into a sequence
 
-- 집계(aggregation)는 sequence를 single value로 'fold' 하거나 변형한다. 
-- 집계의 반대는 'unfolding'이며, single value를 sequence로 변환한다.
+- 집계(aggregation)는 sequence를 single value로 `fold` 하거나 변형한다. 
+- 집계의 반대는 `unfolding`이며, single value를 sequence로 변환한다.
 - `unfolding`의 경우 사전에 sequence의 길이를 정의할 수 없다. 이러한 종류의 sequence를 `stream`이라고 한다.
 - `stream`은 `List`, `Array` 처럼 element가 모두 미리 연산되고, 저장되는 것이 아니라 필요한 경우에 한하여 연산된다.
 - `unfolding` 연산은 계속 다음 element를 연산하며, 이것이 `stream`을 생성하고 특정 조건에 의해 종료되기 위해 `.takeWhile`을 `stream`에 적용한다.
