@@ -182,3 +182,5 @@ res2: List[(Int, Int)] = List((1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7), (
 ```
 
 
+# More
+- WHAT IS THE DIFFERENCE BETWEEN VIEW, STREAM AND ITERATOR?: https://docs.scala-lang.org/tutorials/FAQ/stream-view-iterator.html
