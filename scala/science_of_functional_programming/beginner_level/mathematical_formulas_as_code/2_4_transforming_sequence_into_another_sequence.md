@@ -1,6 +1,6 @@
 # 2.4 Transforming a sequence into another sequence
 
-- `.map`, `.zip` 함수는 sequence를 sequence로 변환한다. 그러나 이러한 함수들은 수학적 귀납법을 통한 일반적 변환 방법을 제공하지 못한다. 
+- `.map`, `.zip` 함수는 sequence를 sequence로 변환한다. 그러나 이러한 함수들은 수학적 귀납법에 의한 general한 변환방을 제공하지 못한다. 
 - 예를 들어 주어진 sequence로부터 부분합을 연산하는 경우, 이에 대학 수식과 수학적 귀납식은 아래와 같다.
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=b_k&space;=&space;\sum_{i=0}^{k-1}&space;x_i" target="_blank"><img src="https://latex.codecogs.com/gif.latex?b_k&space;=&space;\sum_{i=0}^{k-1}&space;x_i" title="b_k = \sum_{i=0}^{k-1} x_i" /></a>
