@@ -146,7 +146,7 @@ res2: Iterator[Int] = empty iterator
 ```
 
 - 위 수행결과에서 보다시피 `iter.toList` 는 서로 다른 결과를 도출한다. 두 번째 수행 시에는 빈 List를 return 한다.
-- 수학의 영역에서는 얼만큼 반복해서 재연산을 하더라도 동일한 input에 대해서 항상 결과는 동일해야한다. 
+- 수학의 영역에서는 여러 번 반복해서 연산을 하더라도 동일한 input에 대해서 항상 결과는 동일해야한다. 
 - 이를 참조투명성(**referential transparency**) 또는 순수함수(**functional purity**)라고 표현한다.  
 - 또한 f(x) 에서 x는 함수가 연산된 이후에도 그 값은 x로 항상 동일하다. 이러한 처리 방식을 **value semantics**이라 한다. identity가 아닌 값 자체에 의미를 두는 것이다.
 
