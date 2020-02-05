@@ -7,11 +7,12 @@
 - 텍스트의 각 단어 w_i가 이전 N-1개의 단어와 연관 있다고 가정하는 경우, P(w_i)는 이전 N-1개 단어의 확률인 <a href="https://www.codecogs.com/eqnedit.php?latex=P(w_{i-N&plus;1},&space;w_{i-N&plus;1},&space;...&space;,&space;w_{i-1})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(w_{i-N&plus;1},&space;w_{i-N&plus;1},&space;...&space;,&space;w_{i-1})" title="P(w_{i-N+1}, w_{i-N+1}, ... , w_{i-1})" /></a> 에 의해 결정된다.
 
 ```scala
-type NGram = Map[Seq[String], Int]
+type NGram = Map[Seq[String], Double]
 
-def NGram(n: Int, tokens: Seq[String]): NGram = {
-    val ngram = tokens.sliding(n).toSeq
-    ngram.groupBy(identity).mapValues(_.size)
+def seq2NGram(n: Int, tokens: Seq[String]): NGram = {
+    val corpus = tokens.sliding(n).toSeq
+    val ngram = corpus.groupBy(identity).mapValues(_.size)
+    ngram.map { case(k, v) => (k, v.toDouble / ngram.filterKeys(_.take(n - 1) == k.take(n - 1)).values.sum)}
 }
 ```
 
