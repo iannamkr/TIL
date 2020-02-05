@@ -57,3 +57,8 @@ empirical probablity와 Good-Turing estimation `θ(r)` 는 아래와 같다.
   - θ(2) = (1/13) x (2 + 1) x (2/3) = 6/39 = 0.1538
   - θ(3) = (1/13) x (3 + 1) x (0/2) = 0
 
+
+### References
+- lecture: https://www.cs.cornell.edu/courses/cs6740/2010sp/guides/lec11.pdf
+- nlp.standford: https://nlp.stanford.edu/nlp/javadoc/javanlp/edu/stanford/nlp/stats/SimpleGoodTuring.html
+- base code: https://www.grsampson.net/RGoodTur.html
