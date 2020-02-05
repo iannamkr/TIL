@@ -62,3 +62,4 @@ empirical probablity와 Good-Turing estimation `θ(r)` 는 아래와 같다.
 - lecture: https://www.cs.cornell.edu/courses/cs6740/2010sp/guides/lec11.pdf
 - nlp.standford: https://nlp.stanford.edu/nlp/javadoc/javanlp/edu/stanford/nlp/stats/SimpleGoodTuring.html
 - base code: https://www.grsampson.net/RGoodTur.html
+- smoothing: https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1122/handouts/cs224n-section1-smoothing-140111.ppt
