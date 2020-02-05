@@ -23,15 +23,23 @@
 <a href="https://www.codecogs.com/eqnedit.php?latex=N&space;=&space;\sum_{r=1}^{\infty&space;}rN_r" target="_blank"><img src="https://latex.codecogs.com/gif.latex?N&space;=&space;\sum_{r=1}^{\infty&space;}rN_r" title="N = \sum_{r=1}^{\infty }rN_r" /></a>
 
 
-주어진 단어가 코퍼스 W 에서 r 번 나타날 확률을 θ(r) 이라 할때, 굿-튜링 측정식은 다음과 같다.
+이때 r 이 충분히 작은 경우 이를 신뢰할 수 없으므로 이를 하향 조정하기 위해 r 대신 d(r) 을 사용한다.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=d_r=(r&plus;1)\cdot&space;\frac{N_{r&plus;1}}{N_r}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?d_r=(r&plus;1)\cdot&space;\frac{N_{r&plus;1}}{N_r}" title="d_r=(r+1)\cdot \frac{N_{r+1}}{N_r}" /></a>
+
+따라서 다음과 같이 된다. 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=N&space;=&space;\sum_{r=0}^{\infty}d_rN_r" target="_blank"><img src="https://latex.codecogs.com/gif.latex?N&space;=&space;\sum_{r=0}^{\infty}d_rN_r" title="N = \sum_{r=0}^{\infty}d_rN_r" /></a>
+
+
+또한 주어진 단어가 코퍼스 W 에서 r 번 나타날 확률을 θ(r) 이라 할때, 굿-튜링 측정식은 다음과 같다.
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\hat{\Theta&space;\left&space;(&space;r&space;\right&space;)}&space;=&space;\frac{1}{N}(r&plus;1)\frac{N_{r&plus;1}}{N_r}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\hat{\Theta&space;\left&space;(&space;r&space;\right&space;)}&space;=&space;\frac{1}{N}(r&plus;1)\frac{N_{r&plus;1}}{N_r}" title="\hat{\Theta \left ( r \right )} = \frac{1}{N}(r+1)\frac{N_{r+1}}{N_r}" /></a>
 
-> 위에 대한 수학적 증명은 링크를 참조한다. https://www.cs.cornell.edu/courses/cs6740/2010sp/guides/lec11.pdf
 
----
 
-# Exercise
+> 추가적인 수학적 증명은 링크를 참조한다. https://www.cs.cornell.edu/courses/cs6740/2010sp/guides/lec11.pdf
+
 
 단어 집합 ```X = {apple, banana, carrots, dates, eggs, frogs, grapes}``` 에 대하여 
 코퍼스 W 가 다음과 같을 때 ```apple apple apple banana banana dates dates eggs eggs eggs frogs grapes grapes```
@@ -48,3 +56,4 @@ empirical probablity와 Good-Turing estimation `θ(r)` 는 아래와 같다.
   - θ(1) = (1/13) x (1 + 1) x (3/1) = 6/13 = 0.4615
   - θ(2) = (1/13) x (2 + 1) x (2/3) = 6/39 = 0.1538
   - θ(3) = (1/13) x (3 + 1) x (0/2) = 0
+
