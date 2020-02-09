@@ -115,7 +115,7 @@ res: Option[String] = None
 
 Map(10 -> "a", 20 -> "b")(10)
 res: String = a
-
+락
 Map(10 -> "a", 20 -> "b")(30)
 java.util.NoSuchElementException: key not found: 30
 
@@ -124,4 +124,49 @@ res: Int = 10
 
 Seq(10, 20, 30)(5)
 java.lang.IndexOutOfBoundException: 5
+```
+
+### The Either type
+
+distunctive type `Either[A, B]`은 error를 평가하기 위한 type이다. 첫 번째 `A` type이 error에 해당하고, 두 번째 `B` type이 non-error에 해당한다. 두 경우를 `Left`, `Right`라고 한다. 
+
+```scala
+sealed trait Either[A, B]
+final case class Left[A, B](value: A) extends Either[A, B]
+final case class Right[A, B](value: B) extends Either[A, B]
+```
+
+```scala
+def logError(x: Either[String, Int], default: Int): Int = x match {
+  case Left(error) => println(s"Got error: $error"); default
+  case Right(res) => res
+}
+```
+
+특정 연산의 결과가 이후 연산에 필요한 경우에, 이전 연산의 어떤 원인으로 인하여 연산이 실패하는 지에 대한 정보가 필요한 경우가 있다. 
+`Option` type의 경우 error 발생 시 `None` type 을 리턴할 뿐 추가적인 정보를 제공하진 않지만, `Either` type의 경우에는 
+자세한 정보를 제공할 수 있다. 
+
+```scala
+Right(1).map(_ + 1)
+res0: Either[Nothing, Int] = Right(2)
+
+Left[String, Int]("error").map(_ + 1)
+res1: Either[String, Int] = Left("error")
+```
+
+
+### Exceptions and the Try type
+```scala
+val p = Try("xyz".toInt)
+p: Try[Int] = Failure(java.lang.NumberFormatException: For input string: "xyz")
+
+val q = Try("0002".toInt)
+q: Try[Int] = Success(2)
+
+val y = q.map(y => throw new Exception("ouch"))
+y: Try[Int] = Failure(java.lang.Exception: ouch)
+
+val z = q.filter(y => throw new Exception("huh"))
+z: Try[Int] = Failure(java.lang.Exception: huh)
 ```
