@@ -1,6 +1,6 @@
 # Lists and trees: recursive disjunctive types 
 
-## Lists
+## 3.3.1 Lists
 
 ```scala
 sealed trait List[A]
@@ -46,5 +46,41 @@ final case class ::[A](head: A, tail: List[A]) extends List[A]
 ```
 
 
+## 3.3.2 Tail recursion with `List`
+
+`List` type은 귀납적 유도에 의해 정의되었으므로 `List`를 재귀적 용법을 사용하여 연산하는 것은 간단하다. 예로 아래는 `map` 함수이다.
+
+```scala
+def map[A, B](xs: List[A])(f: A => B): List[B] = xs match {
+  case Nil => Nil
+  case head :: tail => f(head) :: map(tail)(f)
+}
+```
+
+- `map` 함수는 tail recursion 이 아니기 때문에 큰 list를 처리하는 데 문제가 발생할 수 있다. 
 
 
+```scala
+@tailrec 
+def foldLeft[A, B](xs: List[A])(init: R)(f: (R, A) => R): R = 
+  xs match {
+    case Nil => init
+    case head :: tail => 
+      val newInit = f(init, head)
+      foldLeft(tail)(newInt)(f)
+  }
+
+```
+
+- 이에 반해 `foldLeft`는 case branch 가장 마지막에서 `foldLeft`를 호출하므로, tail recursion에 해당한다. 
+
+
+```scala
+def reverse[A](xs: List[A]): List[A] = 
+  xs.foldLeft(Nil: List[A])((prev, x) => x :: prev)
+  
+def map[A, B](xs: List[A])(f: A => B): List[B] = 
+  xs.foldLeft(Nil: List[B])((prev, x) => f(x) :: prev).reverse
+```
+
+-  이처럼 위에서 구현한 `foldLeft`를 활용하면 `map`을 tail recursion 방식으로 처리할 수 있다. 
