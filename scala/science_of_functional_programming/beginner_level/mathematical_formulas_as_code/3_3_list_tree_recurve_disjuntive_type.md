@@ -84,3 +84,45 @@ def map[A, B](xs: List[A])(f: A => B): List[B] =
 ```
 
 -  이처럼 위에서 구현한 `foldLeft`를 활용하면 `map`을 tail recursion 방식으로 처리할 수 있다. 
+
+
+## 3.3.3 Binary trees
+
+recursive disjuntive type 인 4개의 tree (binary tree, rose tree, regular-shaped tree, abstract syntax tree)에 대해 알아보고자 한다. 
+
+
+```scala
+sealed trait Tree2[A]
+final case class Leaf[A](a: A) extends Tree2[A]
+final case class Branch[A](x: Tree2[A], y: Tree2[A]) extends Tree2[A]
+```
+
+아래는 위에서 정의한 `Tree2`의 예시이다.
+
+![image](https://user-images.githubusercontent.com/13671946/74150752-ea944600-4c4d-11ea-879a-fb26696c0df2.png)
+
+
+```scala
+Branch(Branch(Leaf("a1"), Leaf("a2")), Leaf("a3"))
+Branch(Branch(Leaf("a1"), Branch(Leaf("a2"), Leaf("a3"))), Branch(Leaf("a4"), Leaf("a5")))
+```
+
+
+`Tree2` type에 대한 `foldLeft`는 아래와 같다.
+
+```scala
+def foldLeft[A, B](t: Tree2[A])(init: R)(f: (R, A) => R): R = t match {
+  case Leaf(a) => f(init, a)
+  case Branch(t1, t2) => 
+    val r1 = foldLeft(t1)(init)(f)
+    foldLeft(t2)(r1)(f)
+}
+
+val t: Tree2[String] = Branch(Branch(Leaf("a1"), Leaf("a2")), Leaf("a3"))
+foldLeft(t)("")(_ + " " + _)
+
+res0: String = " a1 a2 a3"
+```
+
+이때 `foldLeft`는 왼쪽/오른쪽 branch에 각각 호출되어야하므로 accumulator를 통한 tail-recursive를 구현할 수 없다.
+
