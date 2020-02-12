@@ -106,3 +106,90 @@ def logWith3: String => String => Unit => { prefix => message => println(s"$pref
 ```
 > 코드의 가독성을 위해 무명함수는 다음처럼 중괄호를 사용하여 작성하는 것이 좋다.  `x => y => expr === { x => { y => expr } }`
 
+
+### 4.1.3 Equivalence of curried and uncurried functions
+
+타입 시그니쳐가 `Int => Int => Int`인 curried 함수가 있을 때, 이 함수는 `integer` 타입을 전달인자로 받아, `integer` 타입을 인자로 하는 uncurried 함수를 리턴한다.
+
+```scala
+def f1(x: Int): Int => Int = { y => x - y }
+```
+
+위 함수는 x 값을 받아 `y => x - y` 을 리턴하며, 그 함수 타입은 `Int => Int` 이다. 이 함수는 아래와 동일하게 작성 가능하다.
+
+```scala
+val f1: Int => Int => Int = { x => y => x - y }
+```
+
+이를 두 개의 전달인자를 받는 함수 f2와 비교해보자.
+```scala
+def f2(x: Int, y: Int): Int = x - y
+```
+
+```scala
+f1(20)(4)
+res0: Int = 16
+
+val r1 = f1(20)
+r1: Int => Int = <function1>
+r1(4)
+res2: Int = 16
+
+f2(20, 4)
+res3: Int = 16
+```
+`f2`는 반드시 두 개의 인자를 모두 필요로하지만, `f1`은 하나씩 인자를 적용할 수 있다.  
+
+이처럼 가능한 모든 인자를 적용하지 않고 일부만 적용한 curried 함수를 **partial application** 이라고 한다. 
+반대로 가능한 모든 인자를 적용한 curried 함수를 **saturated application** 이라고 한다. 
+
+curried function
+- partial application
+- saturated application
+
+```scala
+val r2: Int => Int = f2(20, _)
+r2: Int => Int = <function1>
+```
+
+- 함수 `r2`는 첫 번째 인자만 부분적용하였다. 
+- 반면에 `r2`는 `r1`과 동일한 함수이다. `r2`의 리턴 값은 r1와 동일하기 때문이다. `Int => Int`
+
+좀 더 직관적인 partial application 문법은 아래와 같다.
+
+```scala
+val r3: Int => Int = { x => f2(20, x) }
+r3: Int => Int = <function1>
+```
+
+---
+
+위에서 살펴본 함수 `f1`, `f2`는 정의는 다르나 연산 결과는 동일하다. 
+
+```scala
+val f1: Int => Int => Int = { x => y => x - y }
+def f2(x: Int, y: Int): Int = x - y
+
+def f2new(x: Int, y: Int): Int = f1(x)(y)
+def f1new: Int => Int => Int = { x => y => f2(x, y) }
+```
+- `f1new`, `f2new` 두 함수는 연산 결과는 동일하나 엄밀하게 같은 함수는 아니다. 
+
+`A => B => C => ... => R => S`와 같은 타입 시그니쳐를 갖는 curried 함수는 
+`(A, B, C, ... , R) => S` 타입 시그니쳐를 갖는 uncurried 함수와 동일하게 동작한다.  
+
+다만 curried 함수는 한 번에 하나씩 인자를 처리하는 반면 uncurried 함수는 모든 인자를 받아 처리한다. 
+
+Scala 에서는 curried <=> uncurried 간의 변환을 위한 함수를 제공한다.
+
+```scala
+val f1c = (f2 _).curried
+f1c: Int => (Int => Int) = <function1>
+
+val f2u = Function.uncurried(f1c)
+f2u: (Int, Int) => Int = <function2>
+```
+
+
+
+위에서 정의한 `f1`, `f2` 함수에 대하여 다시 
