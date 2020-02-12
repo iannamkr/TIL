@@ -53,8 +53,9 @@ val f: (Int => Int) = {
   x => p + q * x
 }
 ```
-
 함수 `f`의 body는 `{ x => 10 + 20 * x }` 와 동일하다. 
+
+---
 
 ### 4.1.2 Curried and uncurried function
 
@@ -106,6 +107,7 @@ def logWith3: String => String => Unit => { prefix => message => println(s"$pref
 ```
 > 코드의 가독성을 위해 무명함수는 다음처럼 중괄호를 사용하여 작성하는 것이 좋다.  `x => y => expr === { x => { y => expr } }`
 
+---
 
 ### 4.1.3 Equivalence of curried and uncurried functions
 
@@ -189,7 +191,3 @@ f1c: Int => (Int => Int) = <function1>
 val f2u = Function.uncurried(f1c)
 f2u: (Int, Int) => Int = <function2>
 ```
-
-
-
-위에서 정의한 `f1`, `f2` 함수에 대하여 다시 
