@@ -84,6 +84,14 @@ WHERE shardid = 102027;
 > Coordinator Metadata: http://docs.citusdata.com/en/v9.2/develop/api_metadata.html#metadata-tables
 
 ### Co-Location
+shard와 그 복제본은 가능한 관련성이 높은 row 들끼리, 관련성이 높은 테이블들이 같은 물리적 node에 존재하는 것이 효율적이다. 
+
+network shuffle 비용 없이 locally하게 join query 수행이 가능하기 때문이다. 
+
+> Table Co-Location: http://docs.citusdata.com/en/v9.2/sharding/data_modeling.html#colocation
 
 
 ### Parallelism
+
+query를 여러 머신에 수행되도록 하는 방식은 한번에 여러 query를 동시에 수행할 수 있도록 하며, cluster의 scale-out을 통해 query의 성능 개선을 가능토록 한다.
+하나의 query을 여러 개의 fragment로 분리하는 것을 통해서 처리 성능을 향상시킬 수 있고 병렬성의 증대와 CPU 코어의 효율적 사용이 가능하다.
