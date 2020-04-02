@@ -10,10 +10,9 @@
 - memory per executor: 85% * (node memory / executors by node)
   - reservce yarn, jvm memory
 
+---
 
 ### 1. Common issues: lack of parallelism
-
----
 
 #### Configuation
 - 26 instances n1-highmem-16
