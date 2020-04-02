@@ -38,7 +38,8 @@ SQL명령어에 따른 테이블 레벨에서의 Lock 획득 조건
   
   
 ## Lock conflicts
-![image](https://user-images.githubusercontent.com/13671946/78234753-92bde100-7512-11ea-9545-54ad020788b2.png)
+<img width="720" alt="스크린샷 2020-04-02 오후 6 48 27" src="https://user-images.githubusercontent.com/13671946/78235511-b2093e00-7513-11ea-9797-8462a166cfc0.png">
+
 
 ## Row-level Locks
 
