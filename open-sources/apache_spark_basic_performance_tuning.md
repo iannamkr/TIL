@@ -59,6 +59,22 @@ skewness으로 인하여 일부 task의 처리하는 시간이 다른 task에 �
 - salted key를 사용한다. 
 
 
+---
+### Recap: manual perf tuning
+
+#### Iterative process
+<img width="284" alt="스크린샷 2020-04-02 오후 2 36 07" src="https://user-images.githubusercontent.com/13671946/78214156-79f00400-74ef-11ea-8241-1a23ad0e2bf8.png">
+
+- type of instance for execs and driver
+- executor and driver size
+- number of partitions
+
+#### Opensource
+- sparklens: https://github.com/qubole/sparklens
+- dr-elephant: https://github.com/linkedin/dr-elephant
+
+
+
 
 ### Ref
 - https://databricks.com/session_eu19/how-to-automate-performance-tuning-for-apache-spark
