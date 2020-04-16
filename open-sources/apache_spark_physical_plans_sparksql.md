@@ -56,6 +56,28 @@ spark plan -> _additional rules_ -> executed plan
 
 ![image](https://user-images.githubusercontent.com/13671946/79093388-1edfcc00-7d8f-11ea-867f-1b59b1e2aa42.png)
 
+- FileScan: Represents reading the data from a file format
+```scala
+spark.table("posts_fb")
+.filter($"month" === 5)
+.filter($"profile_id" === ...)
+```
+- table: `posts_fb`
+- partitioned by `month`
+- bucketed by `profile_id`
+- 1 file per bucket
+
+<img width="315" alt="스크린샷 2020-04-16 오후 2 49 02" src="https://user-images.githubusercontent.com/13671946/79419264-75e4db80-7ff1-11ea-8632-aec0f73645fb.png">
+
+- number of files read
+<img width="709" alt="스크린샷 2020-04-16 오후 2 52 39" src="https://user-images.githubusercontent.com/13671946/79419533-f0adf680-7ff1-11ea-996c-503d0b8fcc38.png">
+
+
+> bucket pruning 이란?
+- partition pruning과 개념은 유사하나 더 작은 단위인 bucket으로 pruning을 수행하는 것이다. 
+- bucket은 "partition inside a partition" 으로 partiiton을 특정 컬럼들의 hash value를 통해 나눈 것이다. cardinality가 높은 column의 경우 bucket pruning을 통해 불필요한 데이터의 액세스 방지로 성능상의 이점을 가질 수 있다.
+  
+
 
 ## ref
 - Physical Plans in Spark SQL - David Vrba (Socialbakers): https://www.youtube.com/watch?time_continue=1491&v=99fYi2mopbs&feature=emb_logo
