@@ -26,16 +26,16 @@
 ### Kudu at a high level
 #### Tables and schemas
 - storage system for tables of structured data
-- well-defined schema, finite number of columns
+- **well-defined schema, finite number of columns**
   - name, type, nullable
-- primary key, define the schema at the time of creation
+- primary key, **define the schema at the time of creation**
 - type specific columnar encodings
 - expose sql-like metadata
 
 ### Write operations
-- must fully specify a primary key for Insert, Update, Delete APIs
+- **must fully specify a primary key for Insert, Update, Delete APIs**
 - offers APIs in Java, C++, Python
-- not offer any multi-row transactional APIs, executes as its own transaction
+- **not offer any multi-row transactional APIs, executes as its own transaction**
   - modifications within a single row are always atomically across columns
 
 ### Read operations
@@ -49,9 +49,9 @@
 > Hadoop ecosystem gains much of its performance by scheduling for data locality
 
 ### Consistency Model
-- snapshot consistency (default)
+- `snapshot consistency` (default)
   - guaranteed to yield a snapshot with no anomalies 
-- not provide a external consistency (= strong consistency)
+- not provide a `external consistency` (= strong consistency)
   - not guaranteed with other components in different settings
   ![image](https://user-images.githubusercontent.com/13671946/80487995-a8e78180-8998-11ea-862a-e1fb7b867df9.png)
 
