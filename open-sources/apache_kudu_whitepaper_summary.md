@@ -85,4 +85,31 @@
   - encoded partition keys are not exposed in the API, fully transparent to the user
 
 ### Replication
+- replicates for high availability and durability using `Raft` consensus algorithm
+  - replication factor = 3 or 5
+  - 500 millisecond heartbeat interval, 1500 millisecond election tmeout 
+- Kudu implements some minor improvements on the Raft algorithms
+  - exponential back-off algorithm after a failed leader election
+  - minimize the potential round trips
+- Kudu does not replicate on-dist storage, rather just its OP log
 
+#### Kudu Master
+a centralized, replicated master disign for simplicity of implementation, debuging, operations
+1) `catalog manager` keep track of
+  - tablet existence
+  - tablet schemas
+  - replication level
+  - metadata
+2) `cluster coordinator` keep track of
+  - server liveness 
+  - redistribution of data after server failures
+3) `tablet directory` keep track of
+  - which tablet servers are hosting replicas of each tablet
+  
+## Tablet storage
+1) fast columnar scans
+  - serviced from efficiently encoded columnar data files
+2) low-latency random access
+  - required O(lg n) lookup complexity for random access
+3) consistency of performance
+  - supporting other data storage system (trade off peak performance) 
