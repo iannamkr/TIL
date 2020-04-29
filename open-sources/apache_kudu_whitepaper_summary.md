@@ -54,7 +54,35 @@
 - not provide a `external consistency` (= strong consistency)
   - not guaranteed with other components in different settings
   ![image](https://user-images.githubusercontent.com/13671946/80487995-a8e78180-8998-11ea-862a-e1fb7b867df9.png)
+  
+- offers to manually propagate timestamps between clients
+  1) write 
+  2) ask timestamp token 
+  3) propagated to another client through external channel & passed to the Kudu API 
+  4) preserving the causal relationship between writes made across the two clients 
 
-  - offers option to manually propagate timestamps between clients
-    - preserving causal relationship
-    - commit-wait for too complex timestamp tokens
+## Timestamps
+- uses timestamps internally to implements `concurrency control`
+  - not allow the user to mannually set the timestamp of a write operation
+  > 이와 달리 HBase, Cassandra 데이터 모델에서는 timestamp가 cell을 구성하는 기본 요소이다.
+  > Cell: row + column family + column qualifier + value + timestamp
+  
+## Architecture
+### Cluster roles
+- single `master` server
+  - **reponsible for metadata**
+  - replicate for fault tolerance
+  - no extra requirements for master nodes
+- arbitrary number of `Tablet` servers
+  - **reponsible for data**
+
+### Partitioning
+- tablets = horizontal partitions
+- **ensure random access operations, `insert`, `update` affects only a single tablet**
+> recommend 10-100 tablets per machine, one tablet = 10 giga bytes 
+- **offers flexible partitioning (hash & range partitioning)**
+> BigTable = only key-range-based partitioning, Cassandra = only hash-based partitioning
+  - encoded partition keys are not exposed in the API, fully transparent to the user
+
+### Replication
+
