@@ -25,6 +25,7 @@
 
 #### ref
 - https://docs.microsoft.com/en-us/learn/modules/describe-azure-databricks-delta-lake-architecture
+- https://www.youtube.com/watch?v=s88paHD5sVw
 
 .
 .
