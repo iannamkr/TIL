@@ -56,6 +56,8 @@ __ref: https://eng.uber.com/real-time-exactly-once-ad-event-processing/__
 
 #### 2. Reliability
 - cross-region replication
+> ![image](https://user-images.githubusercontent.com/13671946/160061074-9c7a4daf-b19e-44ee-a8b5-bf8ab9d7c08c.png)
+
 - `Flink`'s checkpointing 
 - main pain point comes from `Aggreation job` itself
 
